@@ -32,8 +32,9 @@ public:
    *  It is virtual, to allow appropriate destruction of subclass objects.
    *  Delete every node in this BST.
    */ // TODO
-  virtual ~BST() {
-    
+  virtual ~BST() 
+  {
+    delete *this->root;
   }
 
   /** Insert a Data item in the BST.
@@ -44,8 +45,9 @@ public:
    *  if a new element was inserted or false if an
    *  equivalent element already existed.
    */ // TODO
-  virtual std::pair<iterator,bool> insert(const Data& item) {
-
+  virtual std::pair<iterator,bool> insert(const Data& item) 
+  {
+    return std::pair<a,b>;
   }
 
 
@@ -68,15 +70,17 @@ public:
   /** Remove all elements from this BST, and destroy them,
    *  leaving this BST with a size of 0.
    */ // TODO
-  void clear() {
+  void clear() 
+  {
     
     size = 0;
   }
 
   /** Return true if the BST is empty, else false.
    */ // TODO
-  bool empty() const {
-
+  bool empty() const 
+  {
+    return ( size == 0 );
   }
 
   /** Return an iterator pointing to the first item in the BST.

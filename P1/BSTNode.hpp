@@ -27,6 +27,12 @@ public:
     left = right = parent = nullptr;
   }
 
+  ~BSTNode()
+  {
+    delete *this->left;
+    delete *this->right;
+    delete *this;
+  }
 
   /** Return the inorder successor of this BSTNode in a BST,
    *  or nullptr if none.
