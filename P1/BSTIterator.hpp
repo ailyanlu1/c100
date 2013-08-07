@@ -20,7 +20,7 @@ private:
    */ // TODO
   BSTIterator(BSTNode<Data>* curr) 
   {
-    this = curr;
+    this.curr = curr;
   }
 
 

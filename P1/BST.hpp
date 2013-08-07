@@ -60,15 +60,17 @@ public:
   
   /** Return the number of items currently in the BST.
    */ // TODO
-  unsigned int size() const {
-
+  unsigned int size() const 
+  {
+    return isize;
   }
 
   /** Remove all elements from this BST, and destroy them,
    *  leaving this BST with a size of 0.
    */ // TODO
   void clear() {
-
+    
+    size = 0;
   }
 
   /** Return true if the BST is empty, else false.
