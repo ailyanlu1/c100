@@ -36,9 +36,28 @@ public:
    *  or nullptr if there is none.
    */ // TODO
   BSTNode<Data>* successor() {
-
+    new BSTNode<Data> tmpNode1;
+    new BSTNOde<Data> tmpNode2;
+    //case 1: right child of current node exists
+    if (this->right) {
+      tmpNode1 = this->right;
+      while (tmpNode1->left) { //find leftmost child
+        tmpNode1 = tmpNode1->left;
+      }
+    }
+    //case 2: no right child
+    else {
+      tmpNode2 = this;
+      while((tmpNode1 = tmpNode2->parent)) { //climb
+        //when you find the parent has left decendent tmpNode2, stop.
+        if(tmpNode1->left == tmpNode2){          
+          break;
+        }
+        tmpNode2 = tmpNode1;
+      }
+    }
+    return tmpNode1;
   }
-
 }; 
 
 /** Overload operator<< to insert a BSTNode's fields in an ostream. */
