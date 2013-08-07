@@ -1,0 +1,34 @@
+Read Chapter 6 (Drozdek or Weiss chapter 4) and make sure you understand the 
+basic properties of binary search trees. In this assignment you will be 
+implementing the basic "insert" and "find" operations, as well as implementing 
+the iterator pattern, using concepts from the C++ Standard Template Library. In
+a later assignment, you will extend the classes you define in this assignment 
+in order to implement a more sophisticated, high-performance search tree 
+structure.
+
+Log in to your account on ieng6 and prep. Create a directory to use for 
+developing your solution to this assignment and cd to that directory. Copy all
+the files from the directory $PUBLIC/P1/ into that directory. This command will
+do that:
+
+cp $PUBLIC/P1/* .
+
+
+Now list the contents of your directory, and you will notice these files:
+BST.hpp  BSTIterator.hpp  BSTNode.hpp  Makefile  test_BST.cpp
+
+You will modify the three *.hpp files, providing full definitions of member 
+functions marked with // TODO, and turn them in. In completing the 
+implementation, you shouldn't remove anything from those files (except the 
+// TODO comments!). If design considerations dictate it, you can add additional
+functions or variables, but they should be in a private: section, indicating
+that those additions are part of the implementation, and not part of the public or protected interface to these classes.
+The test_BST.cpp file is a simple C++ application which partially tests some
+aspects of the BST class. You should definitely add code here, in order to 
+test your program as thoroughly as you can (we will certainly test it as 
+thoroughly as we can when grading it!).
+
+The Makefile is provided for your convenience. Running make in the directory
+will compile the test_BST.cpp application, creating an executable named bst
+which can be run from the command line. Modify this Makefile as needed, or 
+create your own, to support your development process.
