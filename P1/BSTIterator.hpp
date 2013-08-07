@@ -18,7 +18,9 @@ private:
    *  in this BSTIterator.
    *  Note: this constructor is private; but friend classes can access.
    */ // TODO
-  BSTIterator(BSTNode<Data>* curr) {
+  BSTIterator(BSTNode<Data>* curr) 
+  {
+    this = curr;
   }
 
 
@@ -56,11 +58,15 @@ public:
   }
 
   /** Equality test operator. */ // TODO
-  bool operator==(BSTIterator<Data> const & other) const {
+  bool operator==(BSTIterator<Data> const & other) const 
+  {
+    return ( (*this) == other);
   }
 
   /** Inequality test operator. */ // TODO
-  bool operator!=(BSTIterator<Data> const & other) const {
+  bool operator!=(BSTIterator<Data> const & other) const 
+  {
+    return ( (*this) == other );
   }
 
 };
