@@ -48,7 +48,7 @@ public:
    */ // TODO
   virtual std::pair<iterator,bool> insert(const Data& item) 
   {
-    
+    isize++;
     return std::pair<a,b>;
   }
 
@@ -59,7 +59,8 @@ public:
    */ // TODO
   iterator find(const Data& item) const 
   {
-
+    BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
+    
   }
 
   
@@ -76,20 +77,25 @@ public:
   void clear() 
   {
     
-    size = 0;
+    isize = 0;
   }
 
   /** Return true if the BST is empty, else false.
    */ // TODO
   bool empty() const 
   {
-    return ( size == 0 );
+    return ( isize == 0 );
   }
 
   /** Return an iterator pointing to the first item in the BST.
    */ // TODO
-  iterator begin() const {
+  iterator begin() const 
+  {
+    BSTNode<Data> temp = ( (*this)->root );
+    while (temp->left)
+      temp = temp->left;
 
+    return new BSTIterator<Data>(temp);
   }
 
   /** Return an iterator pointing past the last item in the BST.
