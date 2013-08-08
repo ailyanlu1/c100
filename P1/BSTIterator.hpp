@@ -60,13 +60,27 @@ public:
   /** Equality test operator. */ // TODO
   bool operator==(BSTIterator<Data> const & other) const 
   {
-    return ( (*this)->curr->data == other->curr->data);
+    bool equals;
+    if ( (*this)->curr->data == other->curr->data )
+    {
+      equals = true;
+      //check left and right of curr
+      if (( (*this)->curr->left->data == other->curr->left->data ) &&
+         ( (*this)->curr->right->data == other->curr->right->data ))
+	equals = true;
+      else
+        equals  = false;
+    }
+    else
+      equals = false;
+
+    return equals;
   }
 
   /** Inequality test operator. */ // TODO
   bool operator!=(BSTIterator<Data> const & other) const 
   {
-    return ( (*this)->curr->data != other->curr->data );
+    return (!( (*this) == other ));
   }
 
 };
