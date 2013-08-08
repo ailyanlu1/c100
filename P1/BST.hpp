@@ -62,11 +62,12 @@ public:
   iterator find(const Data& item) const 
   {
     BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-    if (iter->curr->data == item)
+    if (item == iter->curr->data)
       return iter;
     else
     {
-      if
+      if (item < iter->curr->data)
+        
   }
 
   
