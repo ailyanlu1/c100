@@ -29,9 +29,12 @@ public:
 
   ~BSTNode()
   {
-    delete *this->left;
-    delete *this->right;
-    delete *this;
+    delete (*this)->left;
+    delete (*this)->right;
+    delete (*this);
+    (*this)->left = NULL;
+    (*this)->right = NULL;
+    (*this) = NULL;
   }
 
   /** Return the inorder successor of this BSTNode in a BST,
