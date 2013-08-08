@@ -48,8 +48,10 @@ public:
    */ // TODO
   virtual std::pair<iterator,bool> insert(const Data& item) 
   {
-    isize++;
-    return std::pair<a,b>;
+    bool inserted;
+
+    ++isize;
+    return std::pair<a,inserted>;
   }
 
 
@@ -60,7 +62,11 @@ public:
   iterator find(const Data& item) const 
   {
     BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-    
+    if (iter->curr->data == item)
+      return iter;
+    else
+    {
+      if
   }
 
   
