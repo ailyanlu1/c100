@@ -24,7 +24,8 @@ public:
   /** Default constructor.
       Initialize an empty BST.
    */
-  BST() : root(nullptr), isize(0)  {
+  BST() : root(nullptr), isize(0) 
+  {
   }
 
 
@@ -34,7 +35,7 @@ public:
    */ // TODO
   virtual ~BST() 
   {
-    delete *this->root;
+    delete (*this)->root;
   }
 
   /** Insert a Data item in the BST.
@@ -47,6 +48,7 @@ public:
    */ // TODO
   virtual std::pair<iterator,bool> insert(const Data& item) 
   {
+    
     return std::pair<a,b>;
   }
 
@@ -55,7 +57,8 @@ public:
    *  Return an iterator pointing to the item, or the end
    *  iterator if the item is not in the BST.
    */ // TODO
-  iterator find(const Data& item) const {
+  iterator find(const Data& item) const 
+  {
 
   }
 
@@ -91,7 +94,8 @@ public:
 
   /** Return an iterator pointing past the last item in the BST.
    */
-  iterator end() const {
+  iterator end() const 
+  {
     return typename BST<Data>::iterator(nullptr);
   }
 
