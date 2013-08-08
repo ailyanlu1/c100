@@ -27,6 +27,9 @@ public:
     left = right = parent = nullptr;
   }
 
+  /** BSTNode Destructor
+   * 
+   */
   ~BSTNode()
   {
     delete (*this)->left;
