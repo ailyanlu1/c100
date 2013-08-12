@@ -35,10 +35,9 @@ public:
    */ // TODO
   virtual ~BST() 
   {
+     //may need to delete isize, iterator as well...
      delete this->root;
-     delete this->isize;
-     this->isize = NULL;
-     this = NULL;
+     this->root = NULL;
   }
 
   /** Insert a Data item in the BST.
@@ -52,31 +51,31 @@ public:
   virtual std::pair<iterator,bool> insert(const Data& item) 
   {
     bool inserted;
-    if ((*this)->root == NULL){
-      (*this)->root = new BSTNode<Data>(item);
-      BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
+    if (this->root == NULL){
+      this->root = new BSTNode<Data>(item);
+      BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
       inserted = true;
       ++isize;
-      return std::make_pair(iter,inserted);
+      return std::make_pair(*iter,inserted);
     }
-    BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
+    BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
     while (iter->curr != NULL){
-      if (iter->curr->value > item){
+      if (iter->curr->data > item){
         iter->curr = iter->curr->left;
       }
-      else if (iter->curr->value < item){
+      else if (iter->curr->data < item){
         iter->curr = iter->curr->right;
       }
       else { //iter->curr->value == item
         inserted = false;
         ++isize;
-        return std::make_pair(iter, inserted);
+        return std::make_pair(*iter, inserted);
       }      
     }
     iter->curr = new BSTNode<Data>(item);
     inserted = true;
     ++isize;
-    return std::make_pair(iter,inserted);
+    return std::make_pair(*iter,inserted);
   }
 
 
@@ -86,21 +85,20 @@ public:
    */ // TODO
   iterator find(const Data& item) const 
   {
-    if ((*this)->root == NULL){
-      (*this)->root = new BSTNode<Data>(item);
-      BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-      return iter;
+    if (this->root == NULL){
+      BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
+      return *iter;
     }
-    BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-    while (iter->curr != NULL && iter->curr->value != item){
-      if (iter->curr->value > item){
+    BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
+    while (iter->curr != NULL && iter->curr->data != item){
+      if (iter->curr->data > item){
         iter->curr = iter->curr->left;
       }
-      if (iter->curr->value < item){
+      if (iter->curr->data < item){
         iter->curr = iter->curr->right;
       }
     }
-    return iter;          
+    return *iter;          
   }
 
   
@@ -116,8 +114,8 @@ public:
    */ // TODO
   void clear() 
   {
-    delete BSTNode<Data> (*this)->root;
-    (*this)->root = NULL;
+    delete this->root;
+    this->root = NULL;
     isize = 0;
   }
 
@@ -132,7 +130,7 @@ public:
    */ // TODO
   iterator begin() const 
   {
-    BSTNode<Data> temp = ( (*this)->root );
+    BSTNode<Data>* temp = new BSTNode<Data>(this->root);
     while (temp->left)
       temp = temp->left;
 
