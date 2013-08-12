@@ -52,7 +52,29 @@ public:
   virtual std::pair<iterator,bool> insert(const Data& item) 
   {
     bool inserted;
-
+    if ((*this)->root == NULL){
+      (*this)->root = new BSTNode(item);
+      BSTITerator<Data> iter = new BSTITerator<Data>((*this)->root);
+      inserted = true;
+      ++isize;
+      return std::pair<iter,inserted>;
+    }
+    BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
+    while (iter->curr != null){
+      if (iter->curr->value > item){
+        iter->curr = iter->curr->left;
+      }
+      else if (iter->curr->value < item){
+        iter->curr = iter->curr->right;
+      }
+      else { //iter->curr->value == item
+        inserted = false;
+        ++isize;
+        return std::pair<iter, inserted>;
+      }      
+    }
+    iter->curr = new BSTNode(item);
+    inserted = true;
     ++isize;
     return std::pair<a,inserted>;
   }
@@ -64,8 +86,13 @@ public:
    */ // TODO
   iterator find(const Data& item) const 
   {
+    if ((*this)->root == NULL){
+      (*this)->root = new BSTNode(item);
+      BSTITerator<Data> iter = new BSTITerator<Data>((*this)->root);
+      return iter;
+    }
     BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-    while (iter->curr != null && iter->curr->value != item){
+     (iter->curr != null && iter->curr->value != item){
       if (iter->curr->value > item){
         iter->curr = iter->curr->left;
       }
@@ -73,13 +100,7 @@ public:
         iter->curr = iter->curr->right;
       }
     }
-    return iter;
-    /*if (item == iter->curr->data)
-      return iter;
-    else
-    {
-      if (item < iter->curr->data)*/
-        
+    return iter;          
   }
 
   
