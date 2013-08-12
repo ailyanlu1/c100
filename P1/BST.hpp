@@ -35,7 +35,7 @@ public:
    */ // TODO
   virtual ~BST() 
   {
-     delete (*this)->root;
+     delete BSTNode<Data> (*this)->root;
      delete (*this)->isize;
      (*this)->isize = NULL;
      (*this) = NULL;
@@ -65,11 +65,20 @@ public:
   iterator find(const Data& item) const 
   {
     BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-    if (item == iter->curr->data)
+    while (iter->curr != null && iter->curr->value != item){
+      if (iter->curr->value > item){
+        iter->curr = iter->curr->left;
+      }
+      if (iter->curr->value < item){
+        iter->curr = iter->curr->right;
+      }
+    }
+    return iter;
+    /*if (item == iter->curr->data)
       return iter;
     else
     {
-      if (item < iter->curr->data)
+      if (item < iter->curr->data)*/
         
   }
 
@@ -86,7 +95,7 @@ public:
    */ // TODO
   void clear() 
   {
-    delete (*this)->root;
+    delete BSTNode<Data> (*this)->root;
     isize = 0;
   }
 
