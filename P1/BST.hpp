@@ -76,7 +76,6 @@ public:
     iter->curr = new BSTNode(item);
     inserted = true;
     ++isize;
-    return std::pair<a,inserted>;
   }
 
 
@@ -117,6 +116,7 @@ public:
   void clear() 
   {
     delete BSTNode<Data> (*this)->root;
+    (*this)->root = NULL;
     isize = 0;
   }
 
