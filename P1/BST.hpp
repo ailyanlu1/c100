@@ -35,7 +35,10 @@ public:
    */ // TODO
   virtual ~BST() 
   {
-    delete (*this)->root;
+     delete (*this)->root;
+     delete (*this)->isize;
+     (*this)->isize = NULL;
+     (*this) = NULL;
   }
 
   /** Insert a Data item in the BST.
@@ -83,7 +86,7 @@ public:
    */ // TODO
   void clear() 
   {
-    
+    delete (*this)->root;
     isize = 0;
   }
 
