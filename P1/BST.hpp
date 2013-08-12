@@ -35,10 +35,10 @@ public:
    */ // TODO
   virtual ~BST() 
   {
-     delete BSTNode<Data> (*this)->root;
-     delete (*this)->isize;
-     (*this)->isize = NULL;
-     (*this) = NULL;
+     delete this->root;
+     delete this->isize;
+     this->isize = NULL;
+     this = NULL;
   }
 
   /** Insert a Data item in the BST.
@@ -53,14 +53,14 @@ public:
   {
     bool inserted;
     if ((*this)->root == NULL){
-      (*this)->root = new BSTNode(item);
-      BSTITerator<Data> iter = new BSTITerator<Data>((*this)->root);
+      (*this)->root = new BSTNode<Data>(item);
+      BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
       inserted = true;
       ++isize;
-      return std::pair<iter,inserted>;
+      return std::make_pair(iter,inserted);
     }
     BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-    while (iter->curr != null){
+    while (iter->curr != NULL){
       if (iter->curr->value > item){
         iter->curr = iter->curr->left;
       }
@@ -70,13 +70,13 @@ public:
       else { //iter->curr->value == item
         inserted = false;
         ++isize;
-        return std::pair<iter, inserted>;
+        return std::make_pair(iter, inserted);
       }      
     }
-    iter->curr = new BSTNode(item);
+    iter->curr = new BSTNode<Data>(item);
     inserted = true;
     ++isize;
-    return std::pair<a,inserted>;
+    return std::make_pair(iter,inserted);
   }
 
 
@@ -87,12 +87,12 @@ public:
   iterator find(const Data& item) const 
   {
     if ((*this)->root == NULL){
-      (*this)->root = new BSTNode(item);
-      BSTITerator<Data> iter = new BSTITerator<Data>((*this)->root);
+      (*this)->root = new BSTNode<Data>(item);
+      BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
       return iter;
     }
     BSTIterator<Data> iter = new BSTIterator<Data>((*this)->root);
-     (iter->curr != null && iter->curr->value != item){
+    while (iter->curr != NULL && iter->curr->value != item){
       if (iter->curr->value > item){
         iter->curr = iter->curr->left;
       }

@@ -48,8 +48,8 @@ public:
    *  or nullptr if there is none.
    */ // TODO
   BSTNode<Data>* successor() {
-    new BSTNode<Data> tmpNode1;
-    new BSTNode<Data> tmpNode2;
+    BSTNode<Data>* tmpNode1 = new BSTNode<Data>;
+    BSTNode<Data>* tmpNode2 = new BSTNode<Data>;
     //case 1: right child of current node exists
     if (this->right) {
       tmpNode1 = this->right;
