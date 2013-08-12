@@ -59,20 +59,23 @@ public:
       return std::make_pair(*iter,inserted);
     }
     BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
+    BSTIterator<Data>* parent = new BSTIterator<Data>(this->root);
     while (iter->curr != NULL){
       if (iter->curr->data > item){
+        parent->curr = iter->curr->left;
         iter->curr = iter->curr->left;
       }
       else if (iter->curr->data < item){
+        parent->curr = iter->curr->left;
         iter->curr = iter->curr->right;
       }
       else { //iter->curr->value == item
         inserted = false;
-        ++isize;
         return std::make_pair(*iter, inserted);
       }      
     }
     iter->curr = new BSTNode<Data>(item);
+    iter->curr->parent = parent->curr
     inserted = true;
     ++isize;
     return std::make_pair(*iter,inserted);
