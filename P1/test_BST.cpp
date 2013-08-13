@@ -49,15 +49,20 @@ int main() {
 
   /* Test find return value. */
   vit = v.begin();
+  int count = 0;
   for(; vit != ven; ++vit) {
+    cout << "Is something wrong with your find function? HELL YEAH IT IS" << endl;
     if(*(b.find(*vit)) != *vit) {
       cout << "Incorrect return value when finding " << *vit << endl;
       return -1;
     }
+  cout << "been through" << ++count << endl;
   }
   
   /* Sort the vector, to compare with inorder iteration on the BST */
+  cout << "this is v: " << *(v.begin()) << endl;
   sort(v.begin(),v.end());
+  cout << "sort done" << endl;
 
   /* Test BST iterator; should iterate inorder */
   cout << "traversal using iterator:" << endl;
