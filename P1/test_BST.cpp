@@ -19,6 +19,7 @@ int main() {
   v.push_back(1);
   v.push_back(100);
   v.push_back(-33);
+  
 
   /* Create an instance of BST holding int */
   BST<int> b;
@@ -84,5 +85,27 @@ int main() {
     ++it;
   }
   cout << "OK." << endl;
+
+  vector<int> dup;
+  dup.push_back(5);
+  dup.push_back(3);
+  dup.push_back(3);
+
+  BST<int> duplicateBST;
+
+  vector<int>::iterator bit = dup.begin();
+  vector<int>::iterator ben = dup.end();
+  for(; bit != ben; ++bit) {
+    // all these inserts are unique, so should return a std::pair
+    // with second part true
+    std::pair<BST<int>::iterator,bool> br = duplicateBST.insert(*bit);
+    if(br.second == false) {
+      cout << "Value is duplicate " << *bit << endl;
+    }
+    if(*(br.first) != *bit) {
+      cout << "Incorrect iterator return value when inserting " << *bit << endl;
+      return -1;
+    } 
+  }
 
 }

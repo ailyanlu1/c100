@@ -1,3 +1,12 @@
+/**
+ * The BST class
+ * P1 CSE 100 2013
+ * Author: Jay Dey
+ * uid: cs100vaj
+ * Author: Joshua Yuen
+ * uid: cs100vbc
+ */
+
 #ifndef BST_HPP
 #define BST_HPP
 #include "BSTNode.hpp"
@@ -51,6 +60,10 @@ public:
   virtual std::pair<iterator,bool> insert(const Data& item) 
   {
     bool inserted;
+    /*
+     * If root is null, create a new BSTNode<Data> object, and
+     * an iterator pointing to that object.
+     */
     if (this->root == NULL){
       this->root = new BSTNode<Data>(item);
       BSTIterator<Data> iter = BSTIterator<Data>(this->root);
@@ -58,6 +71,12 @@ public:
       ++isize;
       return std::make_pair(iter,inserted);
     }
+    /*
+     * Otherwise, go down the tree to find the correct place to
+     * insert a new node containing the data passed in through item.
+     * Then set the relevant pointers in parent and child and return
+     * an iterator pointing at the new node.
+     */
     BSTNode<Data>* temp = this->root;
     BSTNode<Data>* tempParent = NULL;
     bool right_side;
@@ -75,8 +94,8 @@ public:
 	right_side = true;
         temp = temp->right;
       }
-      else //iter->curr->value == item
-      {
+      else //if a node with an equivalent data value is already in the
+      {    //tree, return an iterator pointing to it, and set inserted false
         inserted = false;
         return std::make_pair(iterator(temp), inserted);
       }      
@@ -99,10 +118,10 @@ public:
    */ // TODO
   iterator find(const Data& item) const 
   {
-    if (this->root == NULL){
-      BSTIterator<Data> iter = BSTIterator<Data>(this->root);
-      return iter;
-    }
+    /*
+     * Start at the root, and search for the appropriate node.
+     * Then return an iterator pointing to the item.
+     */
     BSTNode<Data>* temp = this->root;
     while (temp != NULL){
       if (temp->data > item){
@@ -114,10 +133,8 @@ public:
       else {
         return iterator(temp);
       }
-      std::cout << "inside of while, the temp val is: " << temp << std::endl;
     } 
-    std::cout << "it will return: " << temp << std::endl;
-    return end();  
+    return end(); //if item not found, return the end iterator. 
   }
 
   
@@ -151,9 +168,9 @@ public:
   {
     BSTNode<Data>* temp = this->root;
     while (temp->left)
-      temp = temp->left;
+      temp = temp->left; //find leftmost node
 
-    return iterator(temp);
+    return iterator(temp); //return iterator pointing at it
   }
 
   /** Return an iterator pointing past the last item in the BST.

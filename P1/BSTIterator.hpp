@@ -1,3 +1,12 @@
+/**
+ * The BST class
+ * P1 CSE 100 2013
+ * Author: Jay Dey
+ * uid: cs100vaj
+ * Author: Joshua Yuen
+ * uid: cs100vbc
+ */
+
 #ifndef BSTITERATOR_HPP
 #define BSTITERATOR_HPP
 #include "BSTNode.hpp"

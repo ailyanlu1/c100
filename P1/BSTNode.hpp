@@ -1,8 +1,16 @@
+/**
+ * The BST class
+ * P1 CSE 100 2013
+ * Author: Jay Dey
+ * uid: cs100vaj
+ * Author: Joshua Yuen
+ * uid: cs100vbc
+ */
+
 #ifndef BSTNODE_HPP
 #define BSTNODE_HPP
 #include <iostream>
 #include <iomanip>
-
 
 /** This class template defines a node type for the BST container.
  *  Note that all members are public. So, the BST implementation should
@@ -46,31 +54,6 @@ public:
    *  or nullptr if there is none.
    */ // TODO
   BSTNode<Data>* successor() {
-  /*
-    BSTNode<Data>* tmpNode1 = this;
-    BSTNode<Data>* tmpNode2 = this;
-    //case 1: right child of current node exists
-    if (this->right) {
-      tmpNode1 = this->right;
-      while (tmpNode1->left) { //find leftmost child
-        tmpNode1 = tmpNode1->left;
-      }
-    }
-    //case 2: no right child
-    else {
-      while((tmpNode1 = tmpNode2->parent)) { //climb
-        //when you find the parent has left decendent tmpNode2, stop.
-        if(tmpNode1->left == tmpNode2){          
-          break;
-        }
-        tmpNode2 = tmpNode1;
-	if (tmpNode1->parent == NULL){
-          return NULL;
-	}
-      }
-    }
-    return tmpNode1;
-    */
     if (this == NULL)
       return NULL;
 
@@ -97,6 +80,12 @@ public:
     return node;
   }
 
+ /*
+  * checks if the parent is greater than original. if so, returns parent
+  * also checks if parent of the parent is null and the original's data is
+  * greater than the aprent's data. if so, returns null (no successor).
+  * otherwise, recurses.
+  * */
   BSTNode<Data>* helperParent(BSTNode<Data>* parentN, BSTNode<Data>* original)
   {
     //parent is successor
