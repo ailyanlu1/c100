@@ -20,7 +20,7 @@ private:
    */ // TODO
   BSTIterator(BSTNode<Data>* curr) 
   {
-    this.curr = curr;
+    this->curr = curr;
   }
 
 
@@ -61,12 +61,12 @@ public:
   bool operator==(BSTIterator<Data> const & other) const 
   {
     bool equals;
-    if ( (*this)->curr->data == other->curr->data )
+    if ( (*this) == other.curr->data )
     {
       equals = true;
       //check left and right of curr
-      if (( (*this)->curr->left->data == other->curr->left->data ) &&
-         ( (*this)->curr->right->data == other->curr->right->data ))
+      if (( this->curr->left->data == other.curr->left->data ) &&
+         ( this->curr->right->data == other.curr->right->data ))
 	equals = true;
       else
         equals  = false;
