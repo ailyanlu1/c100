@@ -60,31 +60,33 @@ public:
     }
     BSTNode<Data>* temp = this->root;
     BSTNode<Data>* tempParent = NULL;
-    bool side;
-    while (temp != NULL){
-      if (temp->data > item){
+    bool right_side;
+    while (temp != NULL)
+    {
+      if (temp->data > item)
+      {
         tempParent = temp;
-	side = false;
+	right_side = false;
         temp = temp->left;
       }
-      else if (temp->data < item){
+      else if (temp->data < item)
+      {
         tempParent = temp;
-	side = true;
+	right_side = true;
         temp = temp->right;
       }
-      else { //iter->curr->value == item
+      else //iter->curr->value == item
+      {
         inserted = false;
         return std::make_pair(iterator(temp), inserted);
       }      
     }
     temp = new BSTNode<Data>(item);
     temp->parent = tempParent;
-    if (side){
-    tempParent->right = temp;
-    }
-    else{
-    tempParent->left = temp;
-    }
+    if (right_side)
+      tempParent->right = temp;
+    else
+      tempParent->left = temp;
     inserted = true;
     ++isize;
     return std::make_pair(iterator(temp),inserted);
@@ -104,7 +106,6 @@ public:
     BSTNode<Data>* temp = this->root;
     while (temp != NULL){
       if (temp->data > item){
-         
         temp = temp->left;
       }
       else if (temp->data < item){
