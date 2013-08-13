@@ -51,12 +51,11 @@ int main() {
   vit = v.begin();
   int count = 0;
   for(; vit != ven; ++vit) {
-    cout << "Is something wrong with your find function? HELL YEAH IT IS" << endl;
     if(*(b.find(*vit)) != *vit) {
       cout << "Incorrect return value when finding " << *vit << endl;
       return -1;
     }
-  cout << "been through" << ++count << endl;
+    cout << "been through " << ++count << endl;
   }
   
   /* Sort the vector, to compare with inorder iteration on the BST */
@@ -69,8 +68,11 @@ int main() {
   vit = v.begin();
   BST<int>::iterator en = b.end();
   BST<int>::iterator it = b.begin();
+  cout << "entering iteration" << endl;
   for(; vit != ven; ++vit) {
+    cout << "iterating..." << endl;
     if(! (it != en) ) {
+      cout << "entered first if" << endl;
       cout << *it << "," << *vit << ": Early termination of BST iteration." << endl;
       return -1;
     }
