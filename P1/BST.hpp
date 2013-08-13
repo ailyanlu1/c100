@@ -53,32 +53,41 @@ public:
     bool inserted;
     if (this->root == NULL){
       this->root = new BSTNode<Data>(item);
-      BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
+      BSTIterator<Data> iter = BSTIterator<Data>(this->root);
       inserted = true;
       ++isize;
-      return std::make_pair(*iter,inserted);
+      return std::make_pair(iter,inserted);
     }
-    BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
-    BSTIterator<Data>* parent = new BSTIterator<Data>(this->root);
-    while (iter->curr != NULL){
-      if (iter->curr->data > item){
-        parent->curr = iter->curr->left;
-        iter->curr = iter->curr->left;
+    BSTNode<Data>* temp = this->root;
+    BSTNode<Data>* tempParent = NULL;
+    bool side;
+    while (temp != NULL){
+      if (temp->data > item){
+        tempParent = temp;
+	side = false;
+        temp = temp->left;
       }
-      else if (iter->curr->data < item){
-        parent->curr = iter->curr->left;
-        iter->curr = iter->curr->right;
+      else if (temp->data < item){
+        tempParent = temp;
+	side = true;
+        temp = temp->right;
       }
       else { //iter->curr->value == item
         inserted = false;
-        return std::make_pair(*iter, inserted);
+        return std::make_pair(iterator(temp), inserted);
       }      
     }
-    iter->curr = new BSTNode<Data>(item);
-    iter->curr->parent = parent->curr
+    temp = new BSTNode<Data>(item);
+    temp->parent = tempParent;
+    if (side){
+    tempParent->right = temp;
+    }
+    else{
+    tempParent->left = temp;
+    }
     inserted = true;
     ++isize;
-    return std::make_pair(*iter,inserted);
+    return std::make_pair(iterator(temp),inserted);
   }
 
 
@@ -89,19 +98,25 @@ public:
   iterator find(const Data& item) const 
   {
     if (this->root == NULL){
-      BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
-      return *iter;
+      BSTIterator<Data> iter = BSTIterator<Data>(this->root);
+      return iter;
     }
-    BSTIterator<Data>* iter = new BSTIterator<Data>(this->root);
-    while (iter->curr != NULL && iter->curr->data != item){
-      if (iter->curr->data > item){
-        iter->curr = iter->curr->left;
+    BSTNode<Data>* temp = this->root;
+    while (temp != NULL){
+      if (temp->data > item){
+         
+        temp = temp->left;
       }
-      if (iter->curr->data < item){
-        iter->curr = iter->curr->right;
+      else if (temp->data < item){
+        temp = temp->right;
       }
-    }
-    return *iter;          
+      else {
+        return iterator(temp);
+      }
+      std::cout << "inside of while, the temp val is: " << temp << std::endl;
+    } 
+    std::cout << "it will return: " << temp << std::endl;
+    return end();  
   }
 
   
@@ -133,11 +148,11 @@ public:
    */ // TODO
   iterator begin() const 
   {
-    BSTNode<Data>* temp = new BSTNode<Data>(this->root);
+    BSTNode<Data>* temp = this->root;
     while (temp->left)
       temp = temp->left;
 
-    return new BSTIterator<Data>(temp);
+    return iterator(temp);
   }
 
   /** Return an iterator pointing past the last item in the BST.
