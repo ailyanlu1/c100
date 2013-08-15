@@ -17,7 +17,22 @@ public:
   //TODO: implement this function!
   virtual std::pair<typename BST<Data>::iterator,bool> insert(const Data& item)
   {
+    if ( BST<Data>::find(item) )
+      return std::make_pair( BST<Data>::find(item), false );
 
+    RSTNode<Data> newNode = new RSTNode<Data>(item);
+    repair(newNode);
+
+    
+  }
+
+  void repair( RSTNode<Data>* newNode )
+  {
+    while ( (newNode->parent != NULL) && 
+           (newNode->priority > ((RSTNode<Data>*)(newNode->parent))->priority))
+    {
+      
+    }
   }
 
   RSTNode<Data>* rotateWithLeftChild(RSTNode<Data> * p)
