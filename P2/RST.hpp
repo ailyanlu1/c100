@@ -20,6 +20,16 @@ public:
 
   }
 
+  RSTNode<Data>* rotateWithLeftChild(RSTNode<Data> * p)
+  {
+
+  }
+
+  RSTNode<Data>* rotateWithRightChild(RSTNode<Data> * p)
+  {
+
+  }
+
 };
 
 #endif // RST_HPP
