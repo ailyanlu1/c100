@@ -21,7 +21,8 @@ public:
   //TODO: implement this constructor
   RSTNode(Data const & d) : BSTNode<Data>(d)
   {
-    priority = rand();
+    priority = rand(); //maybe need to bound this somehow?
+    this->info = priority;
   }
 
 };
