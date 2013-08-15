@@ -22,12 +22,28 @@ public:
 
   RSTNode<Data>* rotateWithLeftChild(RSTNode<Data> * p)
   {
+    BSTNode<Data>* x = p->left;
+    p->left = x->right;
+    if (x->right)
+      x->right->parent = p;
 
+    x->right = p;
+    p->parent = x;
+
+    return (RSTNode<Data>*)x;
   }
 
   RSTNode<Data>* rotateWithRightChild(RSTNode<Data> * p)
   {
+    BSTNode<Data>* x = p->right;
+    p->right = x->left;
+    if (x->left)
+      x->left->parent = p;
 
+    x->left = p;
+    p->parent = x;
+
+    return (RSTNode<Data>*)x;
   }
 
 };
