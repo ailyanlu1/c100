@@ -38,6 +38,8 @@ public:
   friend class BST<Data>;
   // make BSTNode a friend class, so BSTNode can access curr member variable.
   friend class BSTNode<Data>;
+  // make RST a friend class, so RST can access created BSTIterators.
+  friend class RST<Data>;
 
 
   /** Dereference operator.
