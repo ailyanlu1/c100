@@ -28,15 +28,15 @@ int main (int argc, char** argv)
   // parse arg 1: type of structure
   if(strcmp(argv[1], "bst") == 0)
   {
-    BST<countint> * tree = new BST<countint>();
+    BST<countint> * bam = new BST<countint>();
   }
   else if (strcmp(argv[1], "rst") == 0)
   {
-    RST<countint> * tree = new RST<countint>();
+    RST<countint> * bam = new RST<countint>();
   }
   else if (strcmp(argv[1], "set") == 0)
   {
-    std::set<countint> * tree = new std::set<countint>();
+    std::set<countint> * bam = new std::set<countint>();
   }
   else
   {
@@ -47,7 +47,8 @@ int main (int argc, char** argv)
   //parse arg 2: keys in sorted or randomized order
   if(strcmp(argv[2], "sorted") == 0)
   {
-
+    std::vector<countint> v;
+    v.clear();
   }
   else if(strcmp(argv[2], "shuffled") == 0)
   {
