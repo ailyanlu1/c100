@@ -7,6 +7,7 @@
 #ifndef RST_HPP
 #define RST_HPP
 #include "BST.hpp"
+#include "countint.hpp"
 
 template <typename Data>
 class RST : public BST<Data>
@@ -17,45 +18,71 @@ public:
   //TODO: implement this function!
   virtual std::pair<typename BST<Data>::iterator,bool> insert(const Data& item)
   {
-    if ( BST<Data>::find(item) )
-      return std::make_pair( BST<Data>::find(item), false );
-    
-    BSTIterator<Data> newIter = BST<Data>::find(item);
-    RSTNode<Data> newNode = (RSTNode<Data>*)newIter;
-    repair(newNode);
-    
+    if(!this->root)
+    {
+      srand(time(NULL));
+    }
+    std::pair <typename BST<Data>::iterator,bool> pa = 
+      BST<Data>::insert(item);
+    if ( pa.second == false ){
+      return pa;
+    }
+    BSTNode<Data>* x = pa.first.curr;
+    x->info = rand();
+    bubbleUp(x);
+    return pa;
   }
 
-  void repair( RSTNode<Data>* newNode )
+  void bubbleUp( BSTNode<Data>* newNode )
   {
     while ( (newNode->parent != NULL) && 
-         (newNode->priority > ((RSTNode<Data>*)(newNode->parent))->priority))
+         (newNode->parent->info < newNode->info))
     {
-      RSTNode<Data> p = newNode->parent;
-      RSTNode<Data> grandp = newNode->parent->parent;
-      if (grandp = NULL){
-        this->root = p;
-	p->parent = 0;
+      BSTNode<Data>* p = newNode->parent;
+      BSTNode<Data>* grandp = newNode->parent->parent;
+      if (grandp == NULL){
+        if (p->left == newNode){
+          p=rotateWithLeftChild(p);
+	  this->root = newNode;
+	  newNode->parent = NULL;
+        }
+        else{
+          p=rotateWithRightChild(p);
+	  this->root = newNode;
+	  newNode->parent = NULL;
+        }
       }
       else if (grandp->left == p){
-        grandp->left = p;
 	p->parent = grandp;
-      }
-      else{
-        grandp->right = p;
-        p->parent = grandp;
-      }
+	if (p->left == newNode){
+          p=rotateWithLeftChild(p);
+	  grandp->left = p;
 
-      if (p->left == newNode){
-        p=rotateWithLeftChild(p);
+        }
+        else{
+          p=rotateWithRightChild(p);
+	  grandp->left = p;
+        }
+
       }
       else{
-        p=rotateWithRightChild(p);
+	if (p->left == newNode){
+          p=rotateWithLeftChild(p);
+	  grandp->right = p;
+	  p->parent = grandp;
+
+        }
+        else{
+          p=rotateWithRightChild(p);
+	  grandp->right = p;
+	  p->parent = grandp;
+
+        }
       }
     }
   }
 
-  RSTNode<Data>* rotateWithLeftChild(RSTNode<Data> * p)
+  BSTNode<Data>* rotateWithLeftChild(BSTNode<Data> * p)
   {
     BSTNode<Data>* x = p->left;
     p->left = x->right;
@@ -65,10 +92,10 @@ public:
     x->right = p;
     p->parent = x;
 
-    return (RSTNode<Data>*)x;
+    return x;
   }
 
-  RSTNode<Data>* rotateWithRightChild(RSTNode<Data> * p)
+  BSTNode<Data>* rotateWithRightChild(BSTNode<Data> * p)
   {
     BSTNode<Data>* x = p->right;
     p->right = x->left;
@@ -78,7 +105,7 @@ public:
     x->left = p;
     p->parent = x;
 
-    return (RSTNode<Data>*)x;
+    return x;
   }
 
 };

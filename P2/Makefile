@@ -18,11 +18,10 @@ bst: test_BST.o
 benchtree: benchtree.o
 	g++ -o benchtree benchtree.o
 
-test_RST.o: BST.hpp BSTNode.hpp BSTIterator.hpp RST.hpp RSTNode.hpp \
-            countint.o
+test_RST.o: BST.hpp BSTNode.hpp BSTIterator.hpp RST.hpp countint.o
 test_BST.o: BST.hpp BSTNode.hpp BSTIterator.hpp RST.hpp 
 
-countint.o: countint.hpp
+countint.o: countint.hpp countint.cpp
 
 benchtree.o: benchtree.hpp
 

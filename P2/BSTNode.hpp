@@ -9,6 +9,7 @@
 
 #ifndef BSTNODE_HPP
 #define BSTNODE_HPP
+#include "countint.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -89,11 +90,11 @@ public:
   BSTNode<Data>* helperParent(BSTNode<Data>* parentN, BSTNode<Data>* original)
   {
     //parent is successor
-    if ((parentN->data) > original->data)
+    if (original->data < parentN->data)
       return parentN;
 
     //original = end
-    else if ((parentN->parent == NULL) && (original->data > parentN->data))
+    else if ((parentN->parent == NULL) && (parentN->data < original->data))
       return NULL;
 
     //

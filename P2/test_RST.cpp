@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
   BST<countint>::iterator it = r->begin();
   int i = 0;
   for(; it != en; ++it) {
-    //    cout << *it << endl;
+        cout << *it << endl;
     countint rc = *it;
     countint bc = *vit;
     if(rc < bc || bc < rc) {

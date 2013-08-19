@@ -11,6 +11,7 @@
 #define BST_HPP
 #include "BSTNode.hpp"
 #include "BSTIterator.hpp"
+#include "countint.hpp"
 #include <utility> // for std::pair
 
 template<typename Data>
@@ -82,7 +83,7 @@ public:
     bool right_side;
     while (temp != NULL)
     {
-      if (temp->data > item)
+      if (item < temp->data)
       {
         tempParent = temp;
 	right_side = false;
@@ -124,7 +125,7 @@ public:
      */
     BSTNode<Data>* temp = this->root;
     while (temp != NULL){
-      if (temp->data > item){
+      if (item < temp->data){
         temp = temp->left;
       }
       else if (temp->data < item){

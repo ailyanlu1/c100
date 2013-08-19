@@ -10,11 +10,13 @@
 #ifndef BSTITERATOR_HPP
 #define BSTITERATOR_HPP
 #include "BSTNode.hpp"
+#include "countint.hpp"
 #include <list>
 #include <iterator>
 
 // declare BST here, so friend declaration below will work.
 template<typename X> class BST;
+template<typename X> class RST;
 
 template<typename Data>
 class BSTIterator : public std::iterator<std::input_iterator_tag,Data> {
