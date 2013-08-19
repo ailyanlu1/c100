@@ -19,19 +19,39 @@ public:
   {
     if ( BST<Data>::find(item) )
       return std::make_pair( BST<Data>::find(item), false );
-
-    RSTNode<Data> newNode = new RSTNode<Data>(item);
+    
+    BSTIterator<Data> newIter = BST<Data>::find(item);
+    RSTNode<Data> newNode = (RSTNode<Data>*)newIter;
     repair(newNode);
-
     
   }
 
   void repair( RSTNode<Data>* newNode )
   {
     while ( (newNode->parent != NULL) && 
-           (newNode->priority > ((RSTNode<Data>*)(newNode->parent))->priority))
+         (newNode->priority > ((RSTNode<Data>*)(newNode->parent))->priority))
     {
-      
+      RSTNode<Data> p = newNode->parent;
+      RSTNode<Data> grandp = newNode->parent->parent;
+      if (grandp = NULL){
+        this->root = p;
+	p->parent = 0;
+      }
+      else if (grandp->left == p){
+        grandp->left = p;
+	p->parent = grandp;
+      }
+      else{
+        grandp->right = p;
+        p->parent = grandp;
+      }
+
+      if (p->left == newNode){
+        p=rotateWithLeftChild(p);
+      }
+      else{
+        p=rotateWithRightChild(p);
+      }
     }
   }
 
