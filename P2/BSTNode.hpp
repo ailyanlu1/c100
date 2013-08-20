@@ -73,9 +73,13 @@ public:
    */
   BSTNode<Data>* helperRight(BSTNode<Data> * node)
   {
-    if (node->left != NULL)
-      helperRight(node->left);
+    //if (node->left != NULL)
+      //helperRight(node->left);
+    while (node->left)
+      node = node->left; //find leftmost node
+
     
+    //std::cout << "Helper Right: " <<node->data << std::endl;
     return node;
   }
 

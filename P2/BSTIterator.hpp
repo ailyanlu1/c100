@@ -9,12 +9,14 @@
 #define BSTITERATOR_HPP
 #include "BSTNode.hpp"
 #include "countint.hpp"
+#include <iostream>
 #include <list>
 #include <iterator>
 
 // declare BST here, so friend declaration below will work.
 template<typename X> class BST;
 template<typename X> class RST;
+//template<typename X> class test_RST;
 
 template<typename Data>
 class BSTIterator : public std::iterator<std::input_iterator_tag,Data> {
@@ -41,6 +43,8 @@ public:
   // make RST a friend class, so RST can access created BSTIterators.
   friend class RST<Data>;
 
+  //friend class test_RST;
+
 
   /** Dereference operator.
    *  Return a copy of the Data item in the current BSTNode.
@@ -55,6 +59,7 @@ public:
    */
   BSTIterator<Data>& operator++() {
     curr = curr->successor();
+    //std::cout << curr->info << std::endl;
     return *this;
   }
 

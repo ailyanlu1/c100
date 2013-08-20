@@ -19,15 +19,15 @@ public:
   //TODO: implement this function!
   virtual std::pair<typename BST<Data>::iterator,bool> insert(const Data& item)
   {
-    if( !this->root )
-      srand( time(NULL) );
-    
+   
     std::pair <typename BST<Data>::iterator,bool> pa = BST<Data>::insert(item);
 
+    
     if ( pa.second == false )
       return pa;
    
-    BSTNode<Data>* x = pa.first.curr;
+       BSTNode<Data>* x = pa.first.curr;
+
     x->info = rand();
     bubbleUp( x );
     return pa;
@@ -45,14 +45,14 @@ public:
         if (p->left == newNode)
 	{
           p = rotateWithLeftChild(p);
-	  this->root = newNode;
-	  newNode->parent = NULL;
+	  BST<Data>::root = p;
+	  p->parent = NULL;
         }
         else
 	{
           p = rotateWithRightChild(p);
-	  this->root = newNode;
-	  newNode->parent = NULL;
+	  BST<Data>::root = p;
+	  p->parent = NULL;
         }
       }
       else if (grandp->left == p)
@@ -61,7 +61,7 @@ public:
 	{
           p = rotateWithLeftChild(p);
 	  grandp->left = p;
-
+	  p->parent = grandp;
         }
         else
 	{
@@ -85,14 +85,38 @@ public:
 	  p->parent = grandp;
         }
       }
+     //std::cout<<"Root: "<<this->root->data<<std::endl;
+
+    //print(BST<Data>::root);
+    //std::cout<<std::endl;
     }
   }
+
+  /*void print(BSTNode<Data> *node) { 
+    if(node ==nullptr) 
+      return; 
+    std::cout<<node->data<<" L: "; 
+    if(node->left) 
+      std::cout<< node->left->data; 
+    else 
+      std::cout<<"NULL"; 
+    std::cout<<" R: "; 
+    if(node->right) 
+      std::cout<< node->right->data; 
+    else std::cout<<"NULL"; 
+    if(node->parent != NULL){
+      std::cout<<" Parent: " <<node->parent->data;
+    }
+      std::cout<<" Priority: "<<node->info<<std::endl; 
+      print(node->left); 
+      print(node->right); 
+    }*/
 
   BSTNode<Data>* rotateWithLeftChild(BSTNode<Data> * p)
   {
     BSTNode<Data>* x = p->left;
     p->left = x->right;
-    if (x->right)
+    if (x->right != NULL)
       x->right->parent = p;
 
     x->right = p;
@@ -105,7 +129,7 @@ public:
   {
     BSTNode<Data>* x = p->right;
     p->right = x->left;
-    if (x->left)
+    if (x->left != NULL)
       x->left->parent = p;
 
     x->left = p;
