@@ -20,17 +20,20 @@ using namespace std;
 /**
  * A simple benchmarking program for RST.
  */
+
 static void show_usage()
-{
-  std::cerr << "./benchtree [rst / bst / set] [sorted / shuffled]"
+  {
+    std::cerr << "./benchtree [rst / bst / set] [sorted / shuffled]"
                " [maximum tree size] [number of runs]" << std::endl;
-}
+  }
+
 
 int main (int argc, char** argv) 
 {
   //incorrect usage
   if(argc != 5)
   {
+    std::cout << "Amount of args: " <<argc <<std::endl;
     show_usage();
     return 1;
   }
@@ -38,12 +41,14 @@ int main (int argc, char** argv)
   //parse arg 2: keys in sorted or randomized order
   int sorted = 0;
   int shuffled = 0;
-  if(strcmp(argv[2], "sorted") == 0)
+  if(std::string(argv[2])== "sorted")
     sorted = 1;
-  else if(strcmp(argv[2], "shuffled") == 0)
+  else if(std::string(argv[2])== "shuffled")
     shuffled = 1;
   else
   {
+      std::cout << "2nd Arg: " <<argc <<std::endl;
+
     show_usage();
     return 1;
   }
@@ -52,6 +57,8 @@ int main (int argc, char** argv)
   int n = atoi( argv[3] );
   if ( n == 0 )
   {
+      std::cout << "3rd arg " <<argc <<std::endl;
+
     show_usage();
     return 1;
   }
@@ -60,10 +67,11 @@ int main (int argc, char** argv)
   int runs = atoi( argv[4] );
   if (runs == 0)
   {
+      std::cout << "4th arg: " <<argc <<std::endl;
+
     show_usage();
     return 1;
   }
-
 
   std::cout<< "# Benchmarking average number of comparisons for successful find"
               "\n# Data structure: " << argv[1] << "\n"
@@ -89,7 +97,7 @@ int main (int argc, char** argv)
       v.push_back(i);
 
     //shuffle if necessary
-    if (shuffled == 1)
+    if (shuffled == 1 && sorted != 1)
       std::random_shuffle(v.begin(), v.end());
 
     //insert keys into structure
@@ -126,7 +134,7 @@ int main (int argc, char** argv)
       std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
    
       //(x^2) - 1
-      x = ((++x) ^ 2) - 1;
+      x = x*2+1;
     }
   }
   
@@ -179,7 +187,7 @@ int main (int argc, char** argv)
       std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
     
       //(x^2) - 1
-      x = ((++x) ^ 2) - 1;
+      x = x*2+1;
     }
   }
 
@@ -232,16 +240,22 @@ int main (int argc, char** argv)
       std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
     
       //x^2 - 1
-      x = ((++x) ^ 2) - 1;
+      x = x*2+1;
     }
   }
   else
   {
+      std::cout << "1st arg: " <<argc <<std::endl;
+
     show_usage();
     return 1;
   }
 
+
+
   //SUCCESS
-  std::cout << "\nYOU'RE A WINNER\n" << std:endl;
+  //std::cout << "\nYOU'RE A WINNER\n" << std::endl;
   return 0;
 };
+
+

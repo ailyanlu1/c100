@@ -17,7 +17,7 @@ bst: test_BST.o
 	g++ -o bst test_BST.o
 
 benchtree: benchtree.o
-	g++ -o benchtree benchtree.o
+	g++ -o benchtree benchtree.o countint.o
 
 test_RST.o: BST.hpp BSTNode.hpp BSTIterator.hpp RST.hpp countint.o
 test_BST.o: BST.hpp BSTNode.hpp BSTIterator.hpp RST.hpp 

@@ -85,32 +85,10 @@ public:
 	  p->parent = grandp;
         }
       }
-     //std::cout<<"Root: "<<this->root->data<<std::endl;
 
-    //print(BST<Data>::root);
-    //std::cout<<std::endl;
     }
   }
 
-  /*void print(BSTNode<Data> *node) { 
-    if(node ==nullptr) 
-      return; 
-    std::cout<<node->data<<" L: "; 
-    if(node->left) 
-      std::cout<< node->left->data; 
-    else 
-      std::cout<<"NULL"; 
-    std::cout<<" R: "; 
-    if(node->right) 
-      std::cout<< node->right->data; 
-    else std::cout<<"NULL"; 
-    if(node->parent != NULL){
-      std::cout<<" Parent: " <<node->parent->data;
-    }
-      std::cout<<" Priority: "<<node->info<<std::endl; 
-      print(node->left); 
-      print(node->right); 
-    }*/
 
   BSTNode<Data>* rotateWithLeftChild(BSTNode<Data> * p)
   {
