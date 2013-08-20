@@ -15,6 +15,7 @@ rst: test_RST.o
 
 bst: test_BST.o 
 	g++ -o bst test_BST.o
+
 benchtree: benchtree.o
 	g++ -o benchtree benchtree.o
 
@@ -23,7 +24,7 @@ test_BST.o: BST.hpp BSTNode.hpp BSTIterator.hpp RST.hpp
 
 countint.o: countint.hpp countint.cpp
 
-benchtree.o: benchtree.hpp
+benchtree.o: benchtree.cpp
 
 clean: 
 	$(RM) *.o bst rst :
