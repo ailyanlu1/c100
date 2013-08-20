@@ -110,22 +110,22 @@ int main (int argc, char** argv)
       for (int a = 0; a < runs; a++)
       {
         for (vit = v.begin(); vit != ven; ++vit)
-        {
           bam->find(*vit);
 
-          double avgcomps = countint::getcount() / (double)x;
+        double avgcomps = countint::getcount() / (double)x;
 
-          tot_avg = tot_avg + avgcomps;
-          tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
-        }
-      }
+        tot_avg = tot_avg + avgcomps;
+        tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
+      }  
+        
       tot_avg = tot_avg / (double)runs;
       tot_sq_avg = tot_sq_avg / (double)runs;
 
       double stdev = sqrt(abs(tot_sq_avg - (pow(tot_avg, 2))));
 
       std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
-    
+   
+      //(x^2) - 1
       x = ((++x) ^ 2) - 1;
     }
   }
@@ -163,15 +163,14 @@ int main (int argc, char** argv)
       for (int a = 0; a < runs; a++)
       {
         for (vit = v.begin(); vit != ven; ++vit)
-        {
           ram->find(*vit);
 
-          double avgcomps = countint::getcount() / (double)x;
+        double avgcomps = countint::getcount() / (double)x;
 
-          tot_avg = tot_avg + avgcomps;
-          tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
-        }
+        tot_avg = tot_avg + avgcomps;
+        tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
       }
+      
       tot_avg = tot_avg / (double)runs;
       tot_sq_avg = tot_sq_avg / (double)runs;
 
@@ -179,6 +178,7 @@ int main (int argc, char** argv)
 
       std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
     
+      //(x^2) - 1
       x = ((++x) ^ 2) - 1;
     }
   }
@@ -216,15 +216,14 @@ int main (int argc, char** argv)
       for (int a = 0; a < runs; a++)
       {
         for (vit = v.begin(); vit != ven; ++vit)
-        {
           sam->find(*vit);
 
-          double avgcomps = countint::getcount() / (double)x;
+        double avgcomps = countint::getcount() / (double)x;
 
-          tot_avg = tot_avg + avgcomps;
-          tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
-        }
+        tot_avg = tot_avg + avgcomps;
+        tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
       }
+
       tot_avg = tot_avg / (double)runs;
       tot_sq_avg = tot_sq_avg / (double)runs;
 
@@ -232,7 +231,7 @@ int main (int argc, char** argv)
 
       std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
     
-      //x^2 + 1
+      //x^2 - 1
       x = ((++x) ^ 2) - 1;
     }
   }
@@ -243,5 +242,6 @@ int main (int argc, char** argv)
   }
 
   //SUCCESS
+  std::cout << "\nYOU'RE A WINNER\n" << std:endl;
   return 0;
 };
