@@ -1,3 +1,10 @@
+/*
+ * P2
+ * benchtree.cpp
+ * Author: Jay Dey cs100vaj
+ * Author: Joshua Yuen cs100vbc
+ */
+
 #include "RST.hpp"
 #include "BST.hpp"
 #include "countint.hpp"
@@ -41,20 +48,16 @@ int main (int argc, char** argv)
   }
 
   //parse arg 3: maximum size of tree
-  int n;
-  if(isdigit(argv[3]))
-    n = atoi (argv[3]);
-  else
+  int n = atoi( argv[3] );
+  if ( n == 0 )
   {
     show_usage();
     return 1;
   }
 
   //parse arg 4: number of runs
-  int r;
-  if (isdigit(argv[4]))
-    r = atoi( argv[4] );
-  else
+  int r = atoi( argv[4] );
+  if (r == 0)
   {
     show_usage();
     return 1;
