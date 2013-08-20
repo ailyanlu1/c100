@@ -1,10 +1,8 @@
 /**
- * The BST class
- * P1 CSE 100 2013
- * Author: Jay Dey
- * uid: cs100vaj
- * Author: Joshua Yuen
- * uid: cs100vbc
+ * P2
+ * BSTNode.hpp
+ * Author: Jay Dey cs100vaj
+ * Author: Joshua Yuen cs100vbc
  */
 
 #ifndef BSTNODE_HPP
