@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
   }
 
   /* Test iterator; should iterate the entire tree inorder */
-  cout << "Checking traversal using iterator...";
+  cout << "Checking traversal using iterator...\n";
   vit = v.begin();
   BST<countint>::iterator en = r->end();
   BST<countint>::iterator it = r->begin();
