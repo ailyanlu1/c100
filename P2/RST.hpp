@@ -53,7 +53,6 @@ public:
         }
       }
       else if (grandp->left == p){
-	p->parent = grandp;
 	if (p->left == newNode){
           p=rotateWithLeftChild(p);
 	  grandp->left = p;
@@ -62,6 +61,7 @@ public:
         else{
           p=rotateWithRightChild(p);
 	  grandp->left = p;
+	  p->parent = grandp;
         }
 
       }
