@@ -1,4 +1,5 @@
 #include "RST.hpp"
+#include "BST.hpp"
 #include "countint.hpp"
 #include "string.h"
 #include <cmath>
@@ -40,8 +41,9 @@ int main (int argc, char** argv)
   }
 
   //parse arg 3: maximum size of tree
+  int n;
   if(isdigit(argv[3]))
-    int n = atoi (argv[3]);
+    n = atoi (argv[3]);
   else
   {
     show_usage();
@@ -49,8 +51,9 @@ int main (int argc, char** argv)
   }
 
   //parse arg 4: number of runs
+  int r;
   if (isdigit(argv[4]))
-    int r = atoi( argv[4] );
+    r = atoi( argv[4] );
   else
   {
     show_usage();
@@ -73,8 +76,6 @@ int main (int argc, char** argv)
       v.push_back(i);
 
     std::random_shuffle(v.begin(), v.end());
-    std::vector<countint>::iterator vit = v.begin();
-    std::vector<countint>::iterator ven = v.end();
   }
   else
   {
@@ -82,6 +83,9 @@ int main (int argc, char** argv)
     return 1;
   }
 
+  std::vector<countint>::iterator vit = v.begin();
+  std::vector<countint>::iterator ven = v.end();
+  
   for (vit = v.begin(); vit != ven; ++vit)
     bam.insert(*vit);
 
@@ -102,21 +106,26 @@ int main (int argc, char** argv)
   {
     countint::clearcount();
     for (int a = 0; a < r; a++)
+    {
       for (vit = v.begin(); vit != ven; ++vit)
       {
         bam.find(*vit);
 
-        double avgcomps = countint::getcount() / (double)r;
+        double avgcomps = countint::getcount() / (double)n;
+
+        tot_avg = tot_avg + avgcomps;
+        tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
       }
-
-      tot_avg = tot_avg + avgcomps;
-      tot_sq_avg = tot_sq_avg + (avgcomps ^ 2);
-
-      double stdev = sqrt(tot_sq_avg - ((tot_avg)^2));
-
-      std::cout << x " \t " << avgcomps << " \t " << stdev << "\n" << endl;
     }
+    tot_avg = tot_avg / r;
+    tot_sq_avg = tot_sq_avg / r;
+
+    double stdev = sqrt((tot_sq_avg - (pow(tot_avg, 2))));
+
+    std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << endl;
+    
     x = ((x + 1) * 2) - 1;
   }
 
+  return 1;
 };
