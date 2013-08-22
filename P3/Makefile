@@ -23,6 +23,8 @@ clean:
 
 purify:
 	prep purify
-	purify -cache-dir=$HOME g++ compress.cpp BitOutputStream.cpp BitInputStream.cpp HCTree.cpp HCNode.cpp -o compress
+	purify -cache-dir=$HOME g++ compress.cpp BitOutputStream.cpp 
+	                  BitInputStream.cpp HCTree.cpp HCNode.cpp -o compress
 
-	purify -cache-dir=$HOME g++ uncompress.cpp BitOutputStream.cpp BitInputStream.cpp HCTree.cpp HCNode.cpp -o uncompress
+	purify -cache-dir=$HOME g++ uncompress.cpp BitOutputStream.cpp 
+	                  BitInputStream.cpp HCTree.cpp HCNode.cpp -o uncompress
