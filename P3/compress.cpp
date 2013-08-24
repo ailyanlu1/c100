@@ -17,7 +17,7 @@ int main( int argc, char* argv[] )
   // command line args check
   if( argc != 3 )
   {
-    cerr << "Incorrect args" << endl;
+    cerr << "Incorrect arguments" << endl;
     cerr << "Usage: ./compress infile outfile" << endl;
     return 1;
   }
@@ -38,31 +38,26 @@ int main( int argc, char* argv[] )
   {
     ch = in.get();
 
-    if( ! in.good() )
-      break;
+    if( ! in.good() ) break;
 
-    for( int i=0; i < freq.size(); i++ )
-    {
-      if( ch == i )
-      {
-        ++freq[i];
-	empty = false;
-      }
-    }
+    ++freq[ch];
+    empty = false;
+  }
 
     bytesize++;
   }
 
   if( ! in.eof() )
   {
-    cerr << "There was a problem, sorry." << endl;
+    cerr << "I got 99 problems, and file reading is one." << endl;
     return -1;
   }
 
   in.close();
   cout << "DONE." << endl;
+  in.clear();
 
-  // file info
+  // infile info
   for( int i=0; i<freq.size(); i++ )
   {
     if( freqs[i] != 0 )
@@ -72,7 +67,7 @@ int main( int argc, char* argv[] )
   cout << "Found " << symcount << "unique symbols in input file." << endl;
   cout << "\tFile size: " << bytesize << " bytes." << endl;
 
-  //build Huffman Tree
+  // build Huffman Tree
   cout << "Building Huffman Tree... " << end;
 
   HCTree tree;
@@ -81,9 +76,68 @@ int main( int argc, char* argv[] )
 
   cout << "DONE." << endl;
 
-  // write to file
+  // open out file for writing
   ofstream out;
   out.open( argv[2], ios::binary );
   cout << "Writing to file: " << argv[2] << "... " << end;
 
+  // file header
+  if( out.is_open() )
+    for( int i=0; i<freq.size(); i++ )
+      out << freq[i] << " " << end;
+
+  out.flush();
+
+  BitOutputStream os = BitOutputStream( out );
+  in.open( argv[1], ios::binary );
+
+  if( !empty )
+  {
+    for( int j=0; j<bytesize; j++ )
+    {
+      ch = in.get();
+
+      if( !in.good() ) break;
+      
+      tree.encode( ch, os );
+    }
+  }
+
+  os.flush();
+  in.close();
+  out.close();
+
+  cout << "DONE." << endl;
+
+  // outfile info
+  ifstream in2;
+  in2.open( argv[2] );
+
+  while( in2.is_open() )
+  {
+    ch = in2.get();
+    
+    if( !in2.good() ) break;
+
+    compsize++;
+  }
+
+  if( !in2.eof() )
+  {
+    cerr << "I got 99 problems, and file reading is one." << endl;
+    return -1;
+  }
+
+  in2.close();
+  
+  cout << "Output file has size: " << compsize << " bytes." << endl;
+
+  double ratio = 0;
+  if( filesize != 0 && compsize != 0 )
+    ratio = (double)compsize / (double)filesize;
+
+  cout << "Compression rate: " << ratio << endl;
+
+  return 0;
+  //END COMPRESS PROCESS
 }
