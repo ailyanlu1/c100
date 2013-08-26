@@ -29,7 +29,7 @@ int main( int argc, char* argv[] )
   ifstream in;
   in.open( argv[1], ios::binary );
   
-  int symcount = 0, bytesize = 0; compsize = 0;
+  int symcount = 0, bytesize = 0, compsize = 0;
 
   bool empty = true;
   char ch;
