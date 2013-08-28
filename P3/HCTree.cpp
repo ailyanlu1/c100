@@ -9,7 +9,8 @@
  */
 
 void HCTree::build(const vector<int>& freqs) {
-  for (int i = 0; i < 256, i++){ //convert vector to HCNodes
+  int i;
+  for (i = 0; i < 256, i++){ //convert vector to HCNodes
     HCNode* temp = new HCNode(freqs[i], i, 0, 0, 0);
     leaves[i] = temp; //create a new vector to look up the pointers
                       //for those HCNodes based on bit value
@@ -32,7 +33,31 @@ void HCTree::build(const vector<int>& freqs) {
 }
 
 void HCTree::encode(byte symbol, BitOutputStream& out) const {
+  std::string str = encodeHelper(symbol);
+  int i;
+  for (i = 0; i<str.size(); i++){
+    if (str[i] == 1){
+      out.writeBit(1);
+    }
+    else{
+      out.writeBit(0);
+    }
+  }
+}
 
+char * HCTree::encodeHelper(byte symbol){
+  HCNode* temp = leaves[symbol];
+  std::string sTemp;
+  while (temp->p){
+  if(temp == temp->p->c0){
+    sTemp::append("0");
+  }
+  else{
+    sTemp::append("1");
+  }
+  temp = temp->p;
+  }
+  return sTemp;
 }
 
 int HCTree::decode(BitInputStream& in) const {
