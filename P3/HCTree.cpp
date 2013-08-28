@@ -17,7 +17,7 @@ void HCTree::build(const vector<int>& freqs) {
                       //for those HCNodes based on bit value
   }
 
-  priority_queue< HCNode, leaves, HCNodePtrComp> pQueue;
+  priority_queue<HCNode*, leaves<HCNode*>, HCNodePtrComp> pQueue;
 
   while(pQueue.size() != 1){
     HCNode* temp1 = pQueue.top();
