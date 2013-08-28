@@ -77,7 +77,7 @@ int main (int argc, char** argv)
               "\n# Data structure: " << argv[1] << "\n"
 	      "# Data: " << argv[2] << "\n"
 	      "# N is powers of 2, minus 1, from 1 to " << n << "\n"
-	      "# Averaging over " << runs << "runs for each N \n"
+	      "# Averaging over " << runs << " runs for each N \n"
 	      "#\n" 
 	      "# N \t avgcomps \t stdev\n" << std::endl;
   
@@ -87,6 +87,7 @@ int main (int argc, char** argv)
    */
   if(strcmp(argv[1], "bst") == 0)
   {
+    std::cout << "entered BST" << std::endl;
     BST<countint> * bam = new BST<countint>();
 
     std::vector<countint> v;
@@ -131,7 +132,7 @@ int main (int argc, char** argv)
 
       double stdev = sqrt(abs(tot_sq_avg - (pow(tot_avg, 2))));
 
-      std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
+      std::cout<< "  " << x << " \t " << tot_avg << " \t " << stdev <<std::endl;
    
       //(x^2) - 1
       x = x*2+1;
@@ -140,51 +141,51 @@ int main (int argc, char** argv)
   
   else if (strcmp(argv[1], "rst") == 0)
   {
-    RST<countint> * ram = new RST<countint>();
+    std::cout << "entered RST" << std::endl;
 
-    std::vector<countint> v;
-    v.clear();
- 
-    //populate vector
-    for (int i=0; i<n; i++)
-      v.push_back(i);
-
-    //shuffle if necessary
-    if (shuffled == 1)
-      std::random_shuffle(v.begin(), v.end());
-
-    //insert keys into structure
-    std::vector<countint>::iterator vit = v.begin();
-    std::vector<countint>::iterator ven = v.end();
-  
-    for (vit = v.begin(); vit != ven; ++vit)
-      ram->insert(*vit);
-
-    //comparisons
-    int x = 1; 
+    int x = 1;
+    double avgcomps, avgsq;
     while (x <= n)
     {
-      double tot_avg = 0;
-      double tot_sq_avg = 0;
-
-      countint::clearcount();
-      for (int a = 0; a < runs; a++)
+      avgcomps = avgsq = 0.0;
+      for (int a = 1; a <= runs; a++)
       {
+        RST<countint> * ram = new RST<countint>();
+
+        std::vector<countint> v;
+        v.clear();
+ 
+        //populate vector
+        for (int i=0; i<n; i++)
+          v.push_back(i);
+
+        //shuffle if necessary
+        if (shuffled == 1)
+          std::random_shuffle(v.begin(), v.end());
+
+        //insert keys into structure
+        std::vector<countint>::iterator vit = v.begin();
+        std::vector<countint>::iterator ven = v.end();
+  
+        for (vit = v.begin(); vit != ven; ++vit)
+          ram->insert(*vit);
+
+        countint::clearcount();
         for (vit = v.begin(); vit != ven; ++vit)
           ram->find(*vit);
-
-        double avgcomps = countint::getcount() / (double)x;
-
-        tot_avg = tot_avg + avgcomps;
-        tot_sq_avg = tot_sq_avg + pow(avgcomps, 2);
+        
+        avgcomps = avgcomps + countint::getcount()/(double)n;
+        avgsq = avgsq + pow(avgcomps, 2);
       }
       
-      tot_avg = tot_avg / (double)runs;
-      tot_sq_avg = tot_sq_avg / (double)runs;
+      avgcomps = avgcomps / (double)runs;
+      avgsq = avgsq / (double)runs;
 
-      double stdev = sqrt(abs(tot_sq_avg - (pow(tot_avg, 2))));
+      double stdev = sqrt(abs(avgsq - (pow(avgcomps, 2))));
 
-      std::cout << x << " \t " << tot_avg << " \t " << stdev << "\n" << std::endl;
+      //cout << "BOOM" << endl;
+      std::cout << x << " \t " << avgcomps << " \t " << stdev <<std::endl;
+      //cout << "\n" <<endl;
     
       //(x^2) - 1
       x = x*2+1;
@@ -193,6 +194,7 @@ int main (int argc, char** argv)
 
   else if (strcmp(argv[1], "set") == 0)
   {
+    std::cout << "entered SET" << std::endl;
     std::set<countint> * sam = new std::set<countint>();
 
     std::vector<countint> v;
