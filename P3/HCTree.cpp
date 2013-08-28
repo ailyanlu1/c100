@@ -61,5 +61,19 @@ char * HCTree::encodeHelper(byte symbol){
 }
 
 int HCTree::decode(BitInputStream& in) const {
-
+  HCNode* temp = root;
+  int bit;
+  while ((bit = in.readbit()) != NULL){
+    if ((temp->c0 != NULL) || (temp->c1 != NULL)){
+      if (bit == 1){
+        temp = temp->c1;
+      }
+      else {
+        temp = temp->c0;
+      }
+    }
+    else {
+      return temp->symbol
+    }
+  }
 }
