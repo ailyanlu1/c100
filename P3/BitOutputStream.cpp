@@ -12,8 +12,8 @@
 
 void BitOutputStream::flush()
 {
-  os.put( buf );
-  os.flush();
+  out.put( buf );
+  out.flush();
   buf = nbits = 0;
 }
 

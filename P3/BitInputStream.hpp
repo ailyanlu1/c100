@@ -35,6 +35,6 @@ class BitInputStream
      * Return bit read
      */
     int readBit();
-}
+};
 
 #endif //BITINPUTSTREAM_HPP
