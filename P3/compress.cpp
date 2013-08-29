@@ -90,7 +90,7 @@ int main( int argc, char* argv[] )
   if( out.is_open() )
     for( int i=0; i<freq.size(); i++ )
     {
-      out << freq.at(i) << " ";
+      out << " " << freq.at(i);
       //cerr << (byte)i << freq.at(i)<< " ";
     }
 
