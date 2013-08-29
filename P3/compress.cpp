@@ -34,12 +34,11 @@ int main( int argc, char* argv[] )
   bool empty = true;
   unsigned char ch;
 
+  // build header
   while( 1 )
   {
     ch = in.get();
     
-    //cerr << ch;
-
     if( !in.good() ) 
       break;
 
@@ -49,6 +48,7 @@ int main( int argc, char* argv[] )
         ++freq[i];
         empty = false;
       }
+    //count number of byte in infile
     bytesize++;
   }
 
@@ -91,22 +91,21 @@ int main( int argc, char* argv[] )
     for( int i=0; i<freq.size(); i++ )
     {
       out << " " << freq.at(i);
-      //cerr << (byte)i << freq.at(i)<< " ";
     }
 
   out.flush();
 
   BitOutputStream os = BitOutputStream( out );
-  ifstream in11;
-  in11.open( argv[1], ios::binary );
+  in.open( argv[1], ios::binary );
 
+  // encode file contents
   if( !empty )
   {
     for( int j=0; j<bytesize; j++ )
     {
-      ch = in11.get();
+      ch = in.get();
 
-      if( !in11.good() ) break;
+      if( !in.good() ) break;
       
       tree.encode( ch, os );
     }

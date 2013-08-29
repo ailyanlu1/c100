@@ -34,51 +34,41 @@ void HCTree::build(const vector<int>& freqs)
 
   for (int i = 0; i < 256; i++){ 
     //convert vector to HCNodes
-    //cerr << "beginning build" << endl;
     if( freqs[i] )
     {
       HCNode* temp = new HCNode(freqs[i], (byte)i);
       leaves[i] = temp; //create a new vector to look up the pointers
                       //for those HCNodes based on bit value
       pQueue.push(temp);
-      //cerr << "pushed" << endl;
     }
   }
 
+  //to account for cases in which there's only one leaf
   if ( pQueue.size() == 1)
     pQueue.push(new HCNode(0, 0));
 
+  
   while(pQueue.size() > 1){
+    //pop two nodes with lowest count
     HCNode* temp1 = pQueue.top();
     pQueue.pop();
     HCNode* temp2 = pQueue.top();
     pQueue.pop();
+    //give them a parent node (new tree is born!)
     HCNode* tempR = new HCNode(temp1->count + temp2->count, 0, temp1, temp2);
     temp1->p = tempR;
     temp2->p = tempR;
+    /*
+     * put the new root node back into the stack to keep building tree
+     * from ground up
+     */
     pQueue.push(tempR);
   }
+  //make sure last element left in priority queue is set to root
   root = pQueue.top();
 }
 
-/*
-string HCTree::encodeHelper(byte symbol) const {
-  HCNode* temp = leaves[(int)symbol];
-  string sTemp;
-  while (temp->p){
-  if(temp == temp->p->c0){
-    sTemp.append("0");
-  }
-  else{
-    sTemp.append("1");
-  }
-  temp = temp->p;
-  }
-  return sTemp;
-}
-*/
 void HCTree::encode(byte symbol, BitOutputStream& out) const {
-  //string str = encodeHelper(symbol);
   HCNode * temp = leaves[symbol];
   stack<int> code;
 
@@ -96,25 +86,21 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
 
   while( !code.empty() )
   {
+    //write out the bits
     out.writeBit( code.top() );
     code.pop();
   }
-  /*
-  for (inti = 0; i<str.size(); i++){
-    if (str[i] == 1){
-      out.writeBit(1);
-    }
-    else{
-      out.writeBit(0);
-    }
-  }
-  */
 }
 
 
 int HCTree::decode(BitInputStream& in) const {
   HCNode* temp = root;
   int bit;
+
+  /*
+   * Go down the tree until you hit the correct leaf node described by the 
+   * encoded bits
+   */
   while ( (temp->c0) && (temp->c1) )
   {
     bit = in.readBit();
@@ -124,7 +110,6 @@ int HCTree::decode(BitInputStream& in) const {
     else 
       temp = temp->c0;
   }
-  //cerr << temp->symbol;
   return temp->symbol;
    
 }

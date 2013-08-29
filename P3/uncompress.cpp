@@ -33,12 +33,16 @@ int main( int argc, char* argv[] )
   unsigned char ch;
   int num;
 
+  //process file header
   if( in.is_open() && in.good() )
   {
     for( int i=0; i<freq.size(); i++ )
     {
       in >> num;
+      //populate vector
       freq[i] = num;
+
+      //count total bytesize of original file
       bytesize = bytesize + num;
     }
   }
@@ -49,7 +53,6 @@ int main( int argc, char* argv[] )
   for( int i=0; i<freq.size(); i++ )
     if( freq[i] != 0 )
     {
-      //cerr << "counting symbols" << endl;
       symbols++;
       empty = false;
     }
@@ -66,7 +69,6 @@ int main( int argc, char* argv[] )
   HCTree tree;
   if( !empty )
   {
-    //cerr << "not empty, building" <<  endl;
     tree.build( freq );
   }
 
@@ -83,7 +85,6 @@ int main( int argc, char* argv[] )
     for( int i=0; i<bytesize; i++ )
     {
       out << (byte)tree.decode( is );
-      //cerr << (byte)tree.decode( is );
     }
 
   cout << "DONE." << endl;
