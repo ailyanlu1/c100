@@ -83,9 +83,8 @@ int main( int argc, char* argv[] )
     for( int i=0; i<bytesize; i++ )
     {
       out << (byte)tree.decode( is );
-      cerr << (byte)tree.decode( is );
+      //cerr << (byte)tree.decode( is );
     }
-
 
   cout << "DONE." << endl;
 

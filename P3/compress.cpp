@@ -54,7 +54,7 @@ int main( int argc, char* argv[] )
 
   if( ! in.eof() )
   {
-    cerr << "I got 99 problems, and file reading is one." << endl;
+    cerr << "There was a problem, sorry." << endl;
     return -1;
   }
 
@@ -91,7 +91,7 @@ int main( int argc, char* argv[] )
     for( int i=0; i<freq.size(); i++ )
     {
       out << freq.at(i) << " ";
-      cerr << (byte)i << freq.at(i)<< " ";
+      //cerr << (byte)i << freq.at(i)<< " ";
     }
 
   out.flush();
@@ -133,7 +133,7 @@ int main( int argc, char* argv[] )
 
   if( !in2.eof() )
   {
-    cerr << "I got 99 problems, and file reading is one." << endl;
+    cerr << "There was a problem, sorry." << endl;
     return -1;
   }
 

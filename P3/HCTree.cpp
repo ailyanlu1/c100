@@ -28,11 +28,12 @@ void HCTree::clear(HCNode* node)
   delete node;
 }
 
-void HCTree::build(const vector<int>& freqs) {
+void HCTree::build(const vector<int>& freqs) 
+{
   priority_queue<HCNode*, vector<HCNode*>, HCNodePtrComp> pQueue;
 
-
-  for (int i = 0; i < 256; i++){ //convert vector to HCNodes
+  for (int i = 0; i < 256; i++){ 
+    //convert vector to HCNodes
     //cerr << "beginning build" << endl;
     if( freqs[i] )
     {
@@ -83,8 +84,10 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
 
   while( temp != root )
   {
+    // current is 0 child of parent
     if( temp->p->c0 == temp )
       code.push(0);
+    // current is 1 child of parent
     if( temp->p->c1 == temp )
       code.push(1);
 
@@ -112,20 +115,16 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
 int HCTree::decode(BitInputStream& in) const {
   HCNode* temp = root;
   int bit;
-  while (bit = in.readBit())
+  while ( (temp->c0) && (temp->c1) )
   {
-    if ((temp->c0) && (temp->c1))
-    {
-      if (bit == 1)
-        temp = temp->c1;
-      else 
-        temp = temp->c0;
-    }
-    else 
-    {
-      //cerr << temp->symbol;
-      return temp->symbol;
-    }
-  }
-}
+    bit = in.readBit();
 
+    if (bit == 1)
+      temp = temp->c1;
+    else 
+      temp = temp->c0;
+  }
+  //cerr << temp->symbol;
+  return temp->symbol;
+   
+}

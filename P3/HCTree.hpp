@@ -48,7 +48,6 @@ public:
 
     void clear(HCNode* node);
 
-    string encodeHelper(byte symbol) const;
 };
 
 /** A 'function class' for use as the Compare class in a
