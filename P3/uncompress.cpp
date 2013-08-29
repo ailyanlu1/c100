@@ -88,6 +88,7 @@ int main( int argc, char* argv[] )
 
   cout << "DONE." << endl;
 
+  out.flush();
   in.close();
   out.close();
 
