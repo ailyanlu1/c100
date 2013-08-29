@@ -1,6 +1,9 @@
 #include "HCTree.hpp"
+#include "HCNode.hpp"
 #include <queue>
 #include <string>
+#include "BitInputStream.hpp"
+#include "BitOutputStream.hpp"
 
 /** P3
  *  Implementation of the HCTree class
@@ -9,32 +12,49 @@
  *  Author: Joshua Yuen cs100vbc
  */
 
+HCTree::~HCTree()
+{
+  clear(root);
+}
+
+
+void HCTree::clear(HCNode* node)
+{
+  if (node == NULL) return;
+
+  clear(node->c0);
+  clear(node->c1);
+  delete node;
+}
+
 void HCTree::build(const vector<int>& freqs) {
-  int i;
-  for (i = 0; i < 256; i++){ //convert vector to HCNodes
-    HCNode* temp = new HCNode(freqs[i], i, 0, 0, 0);
+  priority_queue<HCNode*, vector<HCNode*>, HCNodePtrComp> pQueue;
+
+
+  for (int i = 0; i < 256; i++){ //convert vector to HCNodes
+    //cerr << "beginning build" << endl;
+    HCNode* temp = new HCNode(freqs[i], i);
     leaves[i] = temp; //create a new vector to look up the pointers
                       //for those HCNodes based on bit value
+    pQueue.push(temp);
+    //cerr << "pushed" << endl;
   }
 
-  priority_queue<HCNode*, leaves<HCNode*>, HCNodePtrComp> pQueue;
-
-  while(pQueue.size() != 1){
+  while(pQueue.size() > 1){
     HCNode* temp1 = pQueue.top();
     pQueue.pop();
     HCNode* temp2 = pQueue.top();
     pQueue.pop();
-    HCNode* tempR = new HCNode(temp1.count + temp2.count, temp1, temp2, 0);
-    temp1.p = tempR;
-    temp2.p = tempR;
+    HCNode* tempR = new HCNode(temp1->count + temp2->count, 0, temp1, temp2);
+    temp1->p = tempR;
+    temp2->p = tempR;
     pQueue.push(tempR);
   }
-
-
+  root = pQueue.top();
 }
 
-string encodeHelper(byte symbol){
-  HCNode* temp = leaves[symbol];
+string HCTree::encodeHelper(byte symbol) const {
+  HCNode* temp = leaves[(int)symbol];
   string sTemp;
   while (temp->p){
   if(temp == temp->p->c0){
@@ -66,7 +86,7 @@ int HCTree::decode(BitInputStream& in) const {
   HCNode* temp = root;
   int bit;
   while (bit = in.readBit()){
-    if ((temp->c0 != NULL) || (temp->c1 != NULL)){
+    if ((temp->c0) && (temp->c1)){
       if (bit == 1){
         temp = temp->c1;
       }
@@ -79,3 +99,4 @@ int HCTree::decode(BitInputStream& in) const {
     }
   }
 }
+

@@ -1,3 +1,5 @@
+#ifndef BITINPUTSTREAM_HPP
+#define BITINPUTSTREAM_HPP
 /*
  * P3
  * BitInputStream.hpp
@@ -7,8 +9,6 @@
  * Author: Joshua Yuen cs100vbc
  */
 
-#ifndef BITINPUTSTREAM_HPP
-#define BITINPUTSTREAM_HPP
 
 #include <iostream>
 

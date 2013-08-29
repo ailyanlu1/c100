@@ -9,7 +9,7 @@
 
 #include <fstream>
 #include <iostream>
-#include "HCTree.cpp"
+#include "HCTree.hpp"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int main( int argc, char* argv[] )
     return 1;
   }
 
-  cout << "Reading header from file: " << argv[1] << "... " << end;
+  cout << "Reading header from file: " << argv[1] << "... ";
 
   vector<int> freq(256);
   ifstream in;
@@ -30,7 +30,7 @@ int main( int argc, char* argv[] )
 
   int symbols = 0, bytesize = 0, compsize = 0;
   bool empty = true;
-  char ch;
+  unsigned char ch;
   int num;
 
   if( in.is_open() && in.good() )
@@ -48,7 +48,11 @@ int main( int argc, char* argv[] )
   /* report outfile stats */
   for( int i=0; i<freq.size(); i++ )
     if( freq[i] != 0 )
+    {
+      //cerr << "counting symbols" << endl;
       symbols++;
+      empty = false;
+    }
 
   if( symbols == 0 )
     empty = true;
@@ -57,11 +61,14 @@ int main( int argc, char* argv[] )
           " size " << bytesize << " bytes." << endl;
 
   /* build Huffman tree */
-  cout << "Building Huffman tree... " << endl;
+  cout << "Building Huffman tree... ";
 
   HCTree tree;
   if( !empty )
+  {
+    //cerr << "not empty, building" <<  endl;
     tree.build( freq );
+  }
 
   cout << "DONE." << endl;
 
@@ -74,7 +81,7 @@ int main( int argc, char* argv[] )
 
   if ( !empty )
     for( int i=0; i<bytesize; i++ )
-      out << tree.decode( is );
+      out << (byte)tree.decode( is );
 
   cout << "DONE." << endl;
 

@@ -9,18 +9,6 @@
 
 using namespace std;
 
-/** A 'function class' for use as the Compare class in a
- *  priority_queue<HCNode*>.
- *  For this to work, operator< must be defined to
- *  do the right thing on HCNodes.
- */
-class HCNodePtrComp {
-public:
-    bool operator()(HCNode*& lhs, HCNode*& rhs) const {
-        return *lhs < *rhs;
-    }
-};
-
 /** A Huffman Code Tree class.
  *  Not very generic:  Use only if alphabet consists
  *  of unsigned chars.
@@ -57,6 +45,23 @@ public:
      *  tree, and initialize root pointer and leaves vector.
      */
     int decode(BitInputStream& in) const;
+
+    void clear(HCNode* node);
+
+    string encodeHelper(byte symbol) const;
 };
+
+/** A 'function class' for use as the Compare class in a
+ *  priority_queue<HCNode*>.
+ *  For this to work, operator< must be defined to
+ *  do the right thing on HCNodes.
+ */
+class HCNodePtrComp {
+public:
+    bool operator()(HCNode*& lhs, HCNode*& rhs) const {
+        return *lhs < *rhs;
+    }
+};
+
 
 #endif // HCTREE_HPP

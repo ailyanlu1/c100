@@ -1,3 +1,5 @@
+#ifndef BITOUTPUTSTREAM_HPP
+#define BITOUTPUTSTREAM_HPP
 /*
  * P3
  * BitOutputStream.hpp
@@ -8,8 +10,7 @@
  * Author: Joshua Yuen cs100vbc
  */
 
-#ifndef BITOUTPUTSTREAM_HPP
-#define BITOUTPUTSTREAM_HPP
+
 
 #include <iostream>
 

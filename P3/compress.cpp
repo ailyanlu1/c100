@@ -23,7 +23,7 @@ int main( int argc, char* argv[] )
   }
 
   // file read
-  cout << "Reading from file: " << argv[1] << "... " << end;
+  cout << "Reading from file: " << argv[1] << "... ";
 
   vector<int> freq(256);
   ifstream in;
@@ -32,18 +32,20 @@ int main( int argc, char* argv[] )
   int symcount = 0, bytesize = 0, compsize = 0;
 
   bool empty = true;
-  char ch;
+  unsigned char ch;
 
   while( 1 )
   {
     ch = in.get();
+    
+    cerr << ch;
 
-    if( ! in.good() ) break;
+    if( !in.good() ) 
+      break;
 
     ++freq[ch];
     empty = false;
-  }
-
+    
     bytesize++;
   }
 
@@ -60,15 +62,15 @@ int main( int argc, char* argv[] )
   // infile info
   for( int i=0; i<freq.size(); i++ )
   {
-    if( freqs[i] != 0 )
+    if( freq[i] != 0 )
       symcount++;
   }
 
-  cout << "Found " << symcount << "unique symbols in input file." << endl;
+  cout << "Found " << symcount << " unique symbols in input file." << endl;
   cout << "\tFile size: " << bytesize << " bytes." << endl;
 
   // build Huffman Tree
-  cout << "Building Huffman Tree... " << end;
+  cout << "Building Huffman Tree... ";
 
   HCTree tree;
   if( !empty )
@@ -79,12 +81,12 @@ int main( int argc, char* argv[] )
   // open out file for writing
   ofstream out;
   out.open( argv[2], ios::binary );
-  cout << "Writing to file: " << argv[2] << "... " << end;
+  cout << "Writing to file: " << argv[2] << "... ";
 
   // file header
   if( out.is_open() )
     for( int i=0; i<freq.size(); i++ )
-      out << freq[i] << " " << end;
+      out << freq[i] << " ";
 
   out.flush();
 
@@ -133,8 +135,8 @@ int main( int argc, char* argv[] )
   cout << "Output file has size: " << compsize << " bytes." << endl;
 
   double ratio = 0;
-  if( filesize != 0 && compsize != 0 )
-    ratio = (double)compsize / (double)filesize;
+  if( bytesize != 0 && compsize != 0 )
+    ratio = (double)compsize / (double)bytesize;
 
   cout << "Compression rate: " << ratio << endl;
 
