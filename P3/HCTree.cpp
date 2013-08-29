@@ -1,6 +1,7 @@
 #include "HCTree.hpp"
 #include "HCNode.hpp"
 #include <queue>
+#include <stack>
 #include <string>
 #include "BitInputStream.hpp"
 #include "BitOutputStream.hpp"
@@ -33,12 +34,18 @@ void HCTree::build(const vector<int>& freqs) {
 
   for (int i = 0; i < 256; i++){ //convert vector to HCNodes
     //cerr << "beginning build" << endl;
-    HCNode* temp = new HCNode(freqs[i], i);
-    leaves[i] = temp; //create a new vector to look up the pointers
+    if( freqs[i] )
+    {
+      HCNode* temp = new HCNode(freqs[i], (byte)i);
+      leaves[i] = temp; //create a new vector to look up the pointers
                       //for those HCNodes based on bit value
-    pQueue.push(temp);
-    //cerr << "pushed" << endl;
+      pQueue.push(temp);
+      //cerr << "pushed" << endl;
+    }
   }
+
+  if ( pQueue.size() == 1)
+    pQueue.push(new HCNode(0, 0));
 
   while(pQueue.size() > 1){
     HCNode* temp1 = pQueue.top();
@@ -53,6 +60,7 @@ void HCTree::build(const vector<int>& freqs) {
   root = pQueue.top();
 }
 
+/*
 string HCTree::encodeHelper(byte symbol) const {
   HCNode* temp = leaves[(int)symbol];
   string sTemp;
@@ -67,11 +75,29 @@ string HCTree::encodeHelper(byte symbol) const {
   }
   return sTemp;
 }
-
+*/
 void HCTree::encode(byte symbol, BitOutputStream& out) const {
-  string str = encodeHelper(symbol);
-  int i;
-  for (i = 0; i<str.size(); i++){
+  //string str = encodeHelper(symbol);
+  HCNode * temp = leaves[symbol];
+  stack<int> code;
+
+  while( temp != root )
+  {
+    if( temp->p->c0 == temp )
+      code.push(0);
+    if( temp->p->c1 == temp )
+      code.push(1);
+
+    temp = temp->p;
+  }
+
+  while( !code.empty() )
+  {
+    out.writeBit( code.top() );
+    code.pop();
+  }
+  /*
+  for (inti = 0; i<str.size(); i++){
     if (str[i] == 1){
       out.writeBit(1);
     }
@@ -79,22 +105,25 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const {
       out.writeBit(0);
     }
   }
+  */
 }
 
 
 int HCTree::decode(BitInputStream& in) const {
   HCNode* temp = root;
   int bit;
-  while (bit = in.readBit()){
-    if ((temp->c0) && (temp->c1)){
-      if (bit == 1){
+  while (bit = in.readBit())
+  {
+    if ((temp->c0) && (temp->c1))
+    {
+      if (bit == 1)
         temp = temp->c1;
-      }
-      else {
+      else 
         temp = temp->c0;
-      }
     }
-    else {
+    else 
+    {
+      //cerr << temp->symbol;
       return temp->symbol;
     }
   }

@@ -77,11 +77,15 @@ int main( int argc, char* argv[] )
   ofstream out;
   out.open( argv[2], ios::binary );
 
-  cout << "Writing to file: " << argv[2] << "... " << endl;
+  cout << "Writing to file: " << argv[2] << "... ";
 
   if ( !empty )
     for( int i=0; i<bytesize; i++ )
+    {
       out << (byte)tree.decode( is );
+      cerr << (byte)tree.decode( is );
+    }
+
 
   cout << "DONE." << endl;
 

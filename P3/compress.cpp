@@ -38,14 +38,17 @@ int main( int argc, char* argv[] )
   {
     ch = in.get();
     
-    cerr << ch;
+    //cerr << ch;
 
     if( !in.good() ) 
       break;
 
-    ++freq[ch];
-    empty = false;
-    
+    for (size_t i=0; i<freq.size(); i++)
+      if (ch == i)
+      {
+        ++freq[i];
+        empty = false;
+      }
     bytesize++;
   }
 
@@ -80,26 +83,30 @@ int main( int argc, char* argv[] )
 
   // open out file for writing
   ofstream out;
-  out.open( argv[2], ios::binary );
+  out.open( argv[2], ios::out|ios::binary );
   cout << "Writing to file: " << argv[2] << "... ";
 
-  // file header
+  // write file header
   if( out.is_open() )
     for( int i=0; i<freq.size(); i++ )
-      out << freq[i] << " ";
+    {
+      out << freq.at(i) << " ";
+      cerr << (byte)i << freq.at(i)<< " ";
+    }
 
   out.flush();
 
   BitOutputStream os = BitOutputStream( out );
-  in.open( argv[1], ios::binary );
+  ifstream in11;
+  in11.open( argv[1], ios::binary );
 
   if( !empty )
   {
     for( int j=0; j<bytesize; j++ )
     {
-      ch = in.get();
+      ch = in11.get();
 
-      if( !in.good() ) break;
+      if( !in11.good() ) break;
       
       tree.encode( ch, os );
     }
