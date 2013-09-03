@@ -33,9 +33,6 @@ class Graph
     /* Destructor */
     ~Graph()
     {
-      for (int i=0; i<vList.size(); i++)
-        delete vList[i];
-
       vList.clear();
     }
 
