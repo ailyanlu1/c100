@@ -10,11 +10,43 @@
  * Author: Joshua Yuen cs100vbc
  */
 
+#include <string>
+#include "Edge.hpp"
+#include "Vertex.hpp"
+
 using namespace std;
 
 class Graph
 {
+  private:
+    vector<Vertex *> vList;		/* list of vertices */
+    bool cycle;				/* cycle detection flag */
 
+  public:
+    /* Constructor */
+    Graph();
+
+    /* Destructor */
+    ~Graph();
+
+    /* find min spanning tree */
+    Graph* MST();
+
+    /* Dijkstra's shortest path method */
+    Graph* dijkstra();
+    
+    /* print list of vertices and connected edges */
+    void displayGraph();		
+
+    /* total cost of graph */
+    int totalCost();
+
+    /* clear visited flags for all vertices */
+    void reset();
+
+
+    void addVertex( Vertex * newV );
+    Vertex* findVertex( string name );
 };
 
 #endif //GRAPH_HPP

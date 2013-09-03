@@ -42,5 +42,64 @@ class Vertex
       edgeList.clear();
     }
 
+    bool isVisited()
+    {
+      return visited;
+    }
+
+    void setVisited( bool status )
+    {
+      visited = status;
+    }
+
+    string getName()
+    {
+      return name;
+    }
+
+    Vertex* getPre()
+    {
+      return pre;
+    }
+
+    void setPre( Vertex * newPre )
+    {
+      pre = newPre;
+    }
+
+    vector<Edge>& getEdgeList()
+    {
+      return edgeList;
+    }
+
+    void printList()
+    {
+      for( int i=0; i<edgeList.size(); i++ )
+      {
+        Edge temp = edgeList[i];
+	coud << name << "->" << temp.getEnd()->getName() << endl;
+      }
+    }
+    
+    bool checkDupEdge( Edge * e )
+    {
+      for( int i=0; i<edgeList.size(); i++ )
+      {
+        Edge temp = edgeList[i];
+
+        if( ( temp->getStart()->getName() == e.getStart()->getName() ) &&
+	    ( temp->getEnd()->getName() == e.getEnd()->getName() ) )
+	    return true;
+      }
+      return false;
+    }
+
+    void addAdjVertex( Vertex * adj, int cost, int time );
+    {
+      Edge * newEdge = new Edge( this, adj, cost, time );
+
+      if (! checkDupEdge( newEdge ) )
+        edgeList.push_back( *newEdge );
+    }
 };
 #endif // VERTEX_HPP
