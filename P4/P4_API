@@ -1,0 +1,73 @@
+VERTEX
+private:
+  string name // name of current vertex
+  Vertex * pre // pointer to preceding index
+  bool visited // flag to tell if vertex has been visited
+  vector<Edge> edgeList // list of edges connected to this vertex
+
+public:
+  /* constructor */
+  Vertex( string id )
+
+  /* destructor
+   * calls clear on edgelist, destruction of vertex in Graph */
+  ~Vertex()
+
+  bool getStatus();
+  void setStatus( bool stat );
+
+  string getName();
+
+  Vertex * getPre();
+  void setPre( Vertex * set );
+
+  /* check for duplicate edges */
+  bool checkDupEdge( Edge * dup );
+  
+  /* add vertex with this as originator */
+  void addAdjVertex( Vertex * adj, int cost, int time );
+
+  /* output edgeList */
+  void printList();
+
+
+EDGE
+private:
+  Vertex * start;
+  Vertex * end;
+  int cost;
+  int time;
+
+public:
+  /* constructor */
+  Edge( Vertex * st, Vertex * en, int inCost, inTime )
+
+  Vertex * getEnd();
+  Vertex * getStart();
+  int getCost();
+  int getTime();
+
+
+GRAPH
+private:
+  vector<Vertex *> vList;
+  bool cycle;
+
+public:
+  /* Constructor */
+  Graph();
+
+  /* Destructor */
+  ~Graph();
+
+  /* find min spanning tree */
+  Graph * MST();  
+ 
+  Graph * dijkstra();
+
+  void displayGraph();
+  int totalCost();
+  void addVertex( Vertex * newV );
+  Vertex* findVertex( string name );
+  
+
