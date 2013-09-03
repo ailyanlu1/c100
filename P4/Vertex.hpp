@@ -24,7 +24,7 @@ class Vertex
     string name;		/* name of current vertex (computer name) */
     Vertex * pre;		/* pointer to previous vertex */
     bool visited;		/* visited flag */
-    vector<Edge> edgeList;	/* list of connected edges for this vertex */
+    vector<Edge> conList;	/* list of connected edges for this vertex */
 
   public:
     int dist;
@@ -39,7 +39,7 @@ class Vertex
     /* destructor */
     ~Vertex()
     {
-      edgeList.clear();
+      conList.clear();
     }
 
     bool isVisited()
@@ -67,25 +67,25 @@ class Vertex
       pre = newPre;
     }
 
-    vector<Edge>& getEdgeList()
+    vector<Edge>& getConList()
     {
-      return edgeList;
+      return conList;
     }
 
     void printList()
     {
-      for( int i=0; i<edgeList.size(); i++ )
+      for( int i=0; i<conList.size(); i++ )
       {
-        Edge temp = edgeList[i];
+        Edge temp = conList[i];
 	cout << "\t" << name << "->" << temp.getEnd()->getName() << endl;
       }
     }
     
     bool checkDupEdge( Edge * e )
     {
-      for( int i=0; i<edgeList.size(); i++ )
+      for( int i=0; i<conList.size(); i++ )
       {
-        Edge temp = edgeList[i];
+        Edge temp = conList[i];
 
         if( ( temp->getStart()->getName() == e.getStart()->getName() ) &&
 	    ( temp->getEnd()->getName() == e.getEnd()->getName() ) )
@@ -99,7 +99,7 @@ class Vertex
       Edge * newEdge = new Edge( this, adj, cost, time );
 
       if (! checkDupEdge( newEdge ) )
-        edgeList.push_back( *newEdge );
+        conList.push_back( *newEdge );
     }
 };
 #endif // VERTEX_HPP
