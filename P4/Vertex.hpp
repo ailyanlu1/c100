@@ -77,7 +77,7 @@ class Vertex
       for( int i=0; i<edgeList.size(); i++ )
       {
         Edge temp = edgeList[i];
-	coud << name << "->" << temp.getEnd()->getName() << endl;
+	cout << "\t" << name << "->" << temp.getEnd()->getName() << endl;
       }
     }
     
