@@ -10,9 +10,9 @@ netplan: Graph.o
 
 Graph.o: Graph.hpp Vertex.hpp Edge.hpp
 
-Vertex.o: Vertex.hpp
+## Vertex.o: Vertex.hpp
 
-Edge.o: Edge.hpp
+## Edge.o: Edge.hpp
 
 clean:
 	rm -f netplan *.o core*
