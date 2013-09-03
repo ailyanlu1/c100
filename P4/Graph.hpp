@@ -11,6 +11,7 @@
  */
 
 #include <string>
+#include <vector>
 #include "Edge.hpp"
 #include "Vertex.hpp"
 
@@ -24,10 +25,19 @@ class Graph
 
   public:
     /* Constructor */
-    Graph();
+    Graph()
+    {
+      cycle = false;
+    }
 
     /* Destructor */
-    ~Graph();
+    ~Graph()
+    {
+      for (int i=0; i<vList.size(); i++)
+        delete vList[i];
+
+      vList.clear();
+    }
 
     /* find min spanning tree */
     Graph* MST();
