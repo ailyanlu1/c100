@@ -68,10 +68,11 @@ public:
   void displayGraph();
   int totalCost();
 
-  /* takes vector of 
+  /* adds vertex to vList */
   void addVertex( Vertex * ve );
 
   /* return vertex if found, else NULL */
   Vertex* findVertex( string name );
   
-
+  /* clears status of all vertices */
+  void reset()
