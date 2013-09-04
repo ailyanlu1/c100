@@ -81,14 +81,13 @@ class Vertex
       }
     }
     
-    bool checkDupEdge( Edge * e )
+    bool existEdge( Vertex * v )
     {
       for( int i=0; i<conList.size(); i++ )
       {
         Edge temp = conList[i];
 
-        if( ( temp->getStart()->getName() == e.getStart()->getName() ) &&
-	    ( temp->getEnd()->getName() == e.getEnd()->getName() ) )
+        if( ( temp->getStart() == v ) || ( temp->getEnd() == v ) )
 	    return true;
       }
       return false;
