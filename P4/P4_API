@@ -21,10 +21,10 @@ public:
   Vertex * getPre();
   void setPre( Vertex * set );
 
-  /* check for duplicate edges */
-  bool checkDupEdge( Edge * dup );
+  /* check if edge exists between this and v */
+  bool existEdge( Vertex * v );
   
-  /* add vertex with this as originator */
+  /* add vertex with this as originator, connect edge between and add to list */
   void addAdjVertex( Vertex * adj, int cost, int time );
 
   /* output edgeList */
@@ -67,7 +67,11 @@ public:
 
   void displayGraph();
   int totalCost();
-  void addVertex( Vertex * newV );
+
+  /* takes vector of 
+  void addVertices( vector<Vertex *> vortex );
+
+  /* return vertex if found, else NULL */
   Vertex* findVertex( string name );
   
 
