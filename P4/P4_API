@@ -69,7 +69,7 @@ public:
   int totalCost();
 
   /* takes vector of 
-  void addVertices( vector<Vertex *> vortex );
+  void addVertex( Vertex * ve );
 
   /* return vertex if found, else NULL */
   Vertex* findVertex( string name );
