@@ -24,6 +24,7 @@ void Graph::displayGraph()
 
 int Graph::totalCost()
 {
+  this.reset();
   int total = 0;
 
   // for each vertex in graph
@@ -42,6 +43,31 @@ int Graph::totalCost()
     // vertex visited, move along now
     vList[i]->setStatus(true);
   }
+  return total;
+}
+
+int Graph::totalTime()
+{
+  this.reset();
+  int total = 0;
+
+  // for each vertex in graph
+  for( int i=0; i<vList.size(); i++ )
+  {
+    vector< Edge> e = vList[i]->getConList();
+    // for each edge from current vector
+    for( int j=0; j<e.size(); j++ )
+    {
+      Edge temp = e[i];
+      // if end vertex not yet visited
+      if ( vList[i]->getStatus() == e[j].getEnd()->getStatus() )
+        total = total + e[i].getTime();
+    }
+
+    // vertex visited, move along now
+    vList[i]->setStatus(true);
+  }
+  return total;
 }
 
 /* clear status of all vertices */
@@ -74,5 +100,5 @@ Graph* Graph::MST()
 
 Graph* Graph::dijkstra()
 {
-
+  
 }
