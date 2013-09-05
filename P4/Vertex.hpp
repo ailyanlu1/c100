@@ -13,7 +13,7 @@
 #include "Edge.hpp"
 #include <iostream>
 #include <string>
-
+#include <vector>
 
 using namespace std;
 
@@ -77,7 +77,7 @@ class Vertex
       for( int i=0; i<conList.size(); i++ )
       {
         Edge temp = conList[i];
-	cout << "\t" << name << "->" << temp.getEnd()->getName() << endl;
+	cout << "\t" << "->" << temp.getEnd()->getName() << endl;
       }
     }
     
@@ -87,18 +87,28 @@ class Vertex
       {
         Edge temp = conList[i];
 
-        if( ( temp->getStart() == v ) || ( temp->getEnd() == v ) )
+        if( ( temp.getStart() == v ) || ( temp.getEnd() == v ) )
 	    return true;
       }
       return false;
     }
 
-    void addAdjVertex( Vertex * adj, int cost, int time );
+    //TODO: make two-way operation, rather than calling twice
+    void addAdjVertex( Vertex * adj, int cost, int time )
     {
       Edge * newEdge = new Edge( this, adj, cost, time );
 
-      if (! checkDupEdge( newEdge ) )
+      if (! existEdge( adj ) )
+      {
         conList.push_back( *newEdge );
+	Edge * otherEdge = new Edge( adj, this, cost, time );
+	adj->conList.push_back( *otherEdge );
+      }
+    }
+
+    vector<Edge> getEdges()
+    {
+      return conList;
     }
 };
 #endif // VERTEX_HPP

@@ -6,6 +6,9 @@ private:
   vector<Edge> edgeList // list of edges connected to this vertex
 
 public:
+  /* used for dijkstra */
+  int dist;
+
   /* constructor */
   Vertex( string id )
 
@@ -29,6 +32,9 @@ public:
 
   /* output edgeList */
   void printList();
+
+  /* return edgeList */
+  vertex<Edge> getEdges();
 
 
 EDGE
@@ -63,7 +69,7 @@ public:
   /* find min spanning tree */
   Graph * MST();  
  
-  Graph * dijkstra();
+  int dijkstra();
 
   void displayGraph();
   int totalCost();

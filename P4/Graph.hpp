@@ -40,7 +40,7 @@ class Graph
     Graph* MST();
 
     /* Dijkstra's shortest path method */
-    Graph* dijkstra();
+    int dijkstra();
     
     /* print list of vertices and connected edges */
     void displayGraph();		

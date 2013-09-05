@@ -10,7 +10,9 @@
  * Author: Joshua Yuen cs100vbc
  */
 
-#include "Vertex.hpp"
+//#include "Vertex.hpp"
+class Vertex;
+#include <iostream>
 
 using namespace std;
 
@@ -54,4 +56,21 @@ class Edge
     }
 };
 
+class EdgeCostCompare
+{
+  public:
+    bool operator()( Edge e1, Edge e2 )
+    {
+      return ( e1.getCost() > e2.getCost() );
+    }
+};
+
+class EdgeTimeCompare
+{
+  public:
+    bool operator()( Edge e1, Edge e2 )
+    {
+      return ( e1.getTime() > e2.getTime() );
+    }
+};
 #endif // EDGE_HPP
