@@ -67,6 +67,7 @@ public:
 
   void displayGraph();
   int totalCost();
+  int totalTime();
 
   /* adds vertex to vList */
   void addVertex( Vertex * ve );

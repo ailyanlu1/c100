@@ -45,13 +45,14 @@ class Graph
     /* print list of vertices and connected edges */
     void displayGraph();		
 
-    /* total cost of graph */
+    /* total stats of graph */
     int totalCost();
+    int totalTime();
 
     /* clear visited flags for all vertices */
     void reset();
 
-
+    /* add vertex newV to vList */
     void addVertex( Vertex * newV );
     Vertex* findVertex( string name );
 };
