@@ -12,7 +12,6 @@
 
 /* constructors defined in Graph.hpp */
 
-
 void Graph::displayGraph()
 {
   for( int i=0; i<vList.size(); i++ )
@@ -22,6 +21,9 @@ void Graph::displayGraph()
   }
 }
 
+/*
+ * cost of entire graph
+ */
 int Graph::totalCost()
 {
   this.reset();
@@ -37,7 +39,7 @@ int Graph::totalCost()
       Edge temp = e[i];
       // if end vertex not yet visited
       if ( vList[i]->getStatus() == e[j].getEnd()->getStatus() )
-        total = total + e[i].getCost();
+        total = total + e[j].getCost();
     }
 
     // vertex visited, move along now
@@ -46,6 +48,9 @@ int Graph::totalCost()
   return total;
 }
 
+/* 
+ * total time of entire graph
+ */
 int Graph::totalTime()
 {
   this.reset();
@@ -70,20 +75,26 @@ int Graph::totalTime()
   return total;
 }
 
-/* clear status of all vertices */
+/* 
+ * clear status of all vertices 
+ */
 void Graph::reset()
 {
   for( int i=0; i<vList.size(); i++ )
     vList[i]->setStatus( false );
 }
 
-/* add vertex to vList */
+/* 
+ * add vertex to vList 
+ */
 void Graph::addVertex( Vertex * ve )
 {
   vList.push_back( ve );
 }
 
-/* search for vertex by name */
+/* 
+ * search for vertex by name 
+ */
 Vertex* Graph::findVertex( string id )
 {
   for( int i=0; i<vList.size(); i++ )
