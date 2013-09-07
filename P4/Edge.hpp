@@ -20,10 +20,10 @@ using namespace std;
 class Edge
 {
   private:
-    Vertex * start;
-    Vertex * end;
-    int cost;
-    int time;
+    Vertex * start;		// start node of this edge
+    Vertex * end;		// end node of this edge
+    int cost;			// cost of this edge, specified by infile
+    int time;			// timecost of this edge
 
   public:
     /* constructor */
@@ -35,6 +35,7 @@ class Edge
       time = inTime;
     }
 
+    /* helper methods for access to private attributes */
     Vertex* getStart()
     {
       return start;
@@ -56,6 +57,7 @@ class Edge
     }
 };
 
+/* operator overloads for priority queue */
 class EdgeCostCompare
 {
   public:
