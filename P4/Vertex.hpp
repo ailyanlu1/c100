@@ -67,11 +67,6 @@ class Vertex
       pre = newPre;
     }
 
-    vector<Edge>& getConList()
-    {
-      return conList;
-    }
-
     void printList()
     {
       for( int i=0; i<conList.size(); i++ )

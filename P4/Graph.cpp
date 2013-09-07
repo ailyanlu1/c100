@@ -166,6 +166,7 @@ Graph* Graph::MST()
 
 int Graph::dijkstra()
 {
+/*
   this->reset();
   int transtime = 0;
   Vertex * here = vList[0];
@@ -196,7 +197,40 @@ int Graph::dijkstra()
       for( int i=0; i<eList.size(); i++ )
         here->dist = here->dist + eList[i].getTime();
     }
-
   }
   return transtime;
+*/
+
+  this->reset();
+  vector<Vertex*> unvList = vList;
+  Vertex * curr = vList[0];
+  curr->dist = 0;
+  curr->setPre( NULL );
+
+  for( int i=1; i<unvList.size(); i++ ){
+    unvList[i]->dist = -1;
+  }
+
+  int tentDist=0;
+  while (unVList.size() != 0){
+    vector<Edge> eList = curr->getEdges();
+    Vertex * tVert;
+    Vertex * pVert;
+    for (int i=0; i<eList.size(); i++){
+      if (tentDist == 0 || tentDist > eList[i].time){
+        tentDist = eList[i]->end->dist = eList[i].time + curr->dist;
+	tVert = eList[i]->end;
+	if (pVert != NULL){
+	  pVert->dist =-1;
+	}
+	pVert = tVert;
+      }
+    }
+    curr->setVisited(true);
+    unVList.erase(i);
+    if (tentDist == -1){
+      break;
+    }
+    curr = tVert;
+  }
 }
