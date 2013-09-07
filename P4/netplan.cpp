@@ -80,7 +80,7 @@ int main( int argc, char* argv[] )
   cout << "DONE." << endl;
 
   // TODO: DEBUGGING
-  gph->displayGraph();
+  //gph->displayGraph();
   // not actually todo, I just wanted to make it easily seen
 
   int gCost = gph->totalCost();
@@ -91,7 +91,7 @@ int main( int argc, char* argv[] )
   Graph * mst = gph->MST();
 
   // TODO: DEBUGGING
-  mst->displayGraph();
+  //mst->displayGraph();
   // not actually todo, I just wanted to make it easily seen
   
   int mCost = mst->totalCost();
@@ -111,7 +111,7 @@ int main( int argc, char* argv[] )
   cout << "m dij " << dijM << endl;
 
   // difference in timecost of dijkstra between graph and mst
-  cout << "dij diff " << dijG - dijM << endl;
+  cout << "dij diff " << dijM - dijG << endl;
 
   //complete run, end program
   return 0;

@@ -12,6 +12,8 @@
 
 #include <string>
 #include <vector>
+#include <utility>
+#include <iterator>
 #include "Edge.hpp"
 #include "Vertex.hpp"
 
@@ -40,6 +42,7 @@ class Graph
     Graph* MST();
 
     /* Dijkstra's shortest path method */
+    std::pair<Vertex*,int> dkHelper(Vertex* curr);
     int dijkstra();
     
     /* print list of vertices and connected edges */

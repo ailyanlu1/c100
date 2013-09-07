@@ -76,7 +76,8 @@ class Vertex
     /* output list of edges connected to this vertex */
     void printList()
     {
-      for( int i=0; i<conList.size(); i++ )
+      int size = (int)conList.size();
+      for( int i=0; i<size; i++ )
       {
         Edge temp = conList[i];
 	cout << "\t" << "->" << temp.getEnd()->getName() << endl;
@@ -86,7 +87,8 @@ class Vertex
     /* check if edge already exists in this conList */
     bool existEdge( Vertex * v )
     {
-      for( int i=0; i<conList.size(); i++ )
+      int size = (int)conList.size();
+      for( int i=0; i<size; i++ )
       {
         Edge temp = conList[i];
 
