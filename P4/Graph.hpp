@@ -42,7 +42,7 @@ class Graph
     Graph* MST();
 
     /* Dijkstra's shortest path method */
-    std::pair<Vertex*,int> dkHelper(Vertex* curr);
+    std::pair<Edge, int> dkHelper(Vertex* curr);
     int dijkstra();
     
     /* print list of vertices and connected edges */

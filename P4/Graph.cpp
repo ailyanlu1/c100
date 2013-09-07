@@ -164,13 +164,14 @@ Graph* Graph::MST()
   return kenny;
 }
 
-std::pair<Vertex*,int> Graph::dkHelper(Vertex* curr){
+//Adding in Edge Support
+std::pair<Edge*, int> Graph::dkHelper(Vertex* curr){
   cout << " " << endl;
   cout << "EnterDK " << endl;
   cout << "Name: "<< curr->getName() << endl;
   vector<Edge> eList = curr->getEdges();
-  Vertex * tVert;
-  Vertex * pVert;
+  Edge* tEdge;
+  Edge* pEdge;
   int tDist = std::numeric_limits<int>::max();
   for (int i=0; (unsigned)i<eList.size(); i++){
     if (eList[i].getEnd()->isVisited() == false && 
@@ -181,14 +182,15 @@ std::pair<Vertex*,int> Graph::dkHelper(Vertex* curr){
       tDist = eList[i].getTime();
       //eList[i].getEnd()->dist = eList[i].getTime();
       //eList[i].getEnd()->setPre(eList[i].getStart());
-      pVert = tVert = eList[i].getEnd();
+      pEdge = tEdge = eList[i];
     }
   }
-  cout << "ChosenDest: " << pVert->getName() << endl;
+  cout << "ChosenBegin: " << pEdge.getStart()->getStart() << endl;
+  cout << "ChosenDest: " << pEdge.getEnd()->getName() << endl;
   cout << "ChosenDestDist: " << tDist << endl;
   cout << "ExitDK " << endl;
   cout << " " << endl;
-  return std::make_pair(pVert, tDist);
+  return std::make_pair(pEdge, tDist);
 }
 
 int Graph::dijkstra()
@@ -215,8 +217,8 @@ int Graph::dijkstra()
 	vList[i]->dist = std::numeric_limits<int>::max(); 
     }
     
-    std::pair<Vertex*, int> pr1;
-    std::pair<Vertex*, int> pr2;
+    std::pair<Edge, int> pr1;
+    std::pair<Edge, int> pr2;
     while (visited.size() != vList.size()){
       int count = 0;
       for (; visIter != visEn; ++visIter){
@@ -226,11 +228,12 @@ int Graph::dijkstra()
         }
         cout << " " << endl;
         cout << "Begin Loop" << endl;
-        cout << "LoopName: " <<pr1.first->getName() << endl;
+        cout << "LoopBegName: " <<pr1.first->getStart()->getName << endl;
+	cout << "LoopEndpName: " <<pr1.first->getStart()->getName << endl;
         if (pr1.first == NULL || pr1.second == -1){
         //all neighbor Vertices have been visited for curr
-  	count++;
-  	cout << "Shit's Happenin' " << endl;
+  	  count++;
+  	  cout << "Shit's Happenin' " << endl;
           continue;
         }
         int comp1 = pr2.second;
@@ -247,14 +250,16 @@ int Graph::dijkstra()
       }
       
       count = 0;
-      //set the vector visited, set its distance, and push it into vector.
+      //set the vertex visited, set its distance, and push it into vector.
       cout << " " << endl;
-      cout << "Finalname: " << pr2.first->getName() << endl;
-      pr2.first->setVisited(true);
-      cout << "PreName: " << pr2.first->getPre()->getName() << endl;
-      cout << "Pre: " << pr2.first->getPre()->dist << endl;
-      pr2.first->dist = pr2.second + pr2.first->getPre()->dist;
-      totalTime = pr2.second + totalTime;
+      cout << "FinalDest: " << pr2.first.getEnd()->getName() << endl;
+      cout << "FinalBeg: " << pr2.first.getStart()->getName() << endl;
+      pr2.first.getEnd()->setVisited(true);
+      pr2.first.getEnd()->setPre(pr2.first.getStart());
+      cout << "PreName: " << pr2.first.getEnd->getPre()->getName() << endl;
+      cout << "Pre: " << pr2.first.getEnd()->getPre()->getName()->dist << endl;
+      pr2.first.getEnd()->dist = pr2.second + pr2.first.getEnd()->getPre()->dist;
+      totalTime = pr2.first.getEnd()->dist + totalTime;
       cout << "totalTime: " << totalTime << endl;
       cout << " " << endl;
       visited.push_back(pr2.first);
