@@ -42,6 +42,7 @@ class Vertex
       conList.clear();
     }
 
+    /* helper methods for access to private attributes */
     bool isVisited()
     {
       return visited;
@@ -66,7 +67,13 @@ class Vertex
     {
       pre = newPre;
     }
+    
+    vector<Edge> getEdges()
+    {
+      return conList;
+    }
 
+    /* output list of edges connected to this vertex */
     void printList()
     {
       for( int i=0; i<conList.size(); i++ )
@@ -76,6 +83,7 @@ class Vertex
       }
     }
     
+    /* check if edge already exists in this conList */
     bool existEdge( Vertex * v )
     {
       for( int i=0; i<conList.size(); i++ )
@@ -88,7 +96,9 @@ class Vertex
       return false;
     }
 
-    //TODO: make two-way operation, rather than calling twice
+    /* adds adj as connected vertex through new edge
+     * adds edge to conList for this, as well as vice versa for adj
+     */
     void addAdjVertex( Vertex * adj, int cost, int time )
     {
       Edge * newEdge = new Edge( this, adj, cost, time );
@@ -99,11 +109,6 @@ class Vertex
 	Edge * otherEdge = new Edge( adj, this, cost, time );
 	adj->conList.push_back( *otherEdge );
       }
-    }
-
-    vector<Edge> getEdges()
-    {
-      return conList;
     }
 };
 #endif // VERTEX_HPP
