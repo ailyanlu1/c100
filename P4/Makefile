@@ -1,7 +1,7 @@
 # makefile for CSE 100 P4
 
 CC=g++
-CXXFLAGS=-g
+CXXFLAGS= -std=c++11 -O2 -g -Wall
 LDFLAGS=-g
 
 all: netplan
