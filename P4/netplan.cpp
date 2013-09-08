@@ -29,7 +29,7 @@ int main( int argc, char* argv[] )
   }
 
   // file read
-  cout << "Reading from file: " << argv[1] << "... ";
+  //cout << "Reading from file: " << argv[1] << "... ";
   ifstream in( argv[1] );
 
   Graph *gph = new Graph();
@@ -38,6 +38,7 @@ int main( int argc, char* argv[] )
 
   while ( !in.eof() )
   {
+    bool noAdd = false;
     in >> temp1 >> temp2 >> cost >> time;
 
     // reached end of file
@@ -45,28 +46,47 @@ int main( int argc, char* argv[] )
       break;
 
     Vertex *v1, *v2;
+    if( gph->findVertex(temp1) != NULL && gph->findVertex(temp2) != NULL
+       && gph->findVertex(temp1) != gph->findVertex(temp2)){
+	Vertex * temp3 = gph->findVertex(temp1);
+	Vertex * temp4 = gph->findVertex(temp2);
+	vector<Edge> Eg3 = temp3->getEdges();
+	for (int i = 0; i< (int)Eg3.size(); i++){
+	  if (Eg3[i].getEnd() == temp4)
+	    noAdd = true;
+	}
+	if (noAdd){
+	  //cout << endl;
+	  //cout << "Ignoring duplicate Edge(" << temp3->getName() << "," << temp4->getName() << "," << cost << "," << time << ")" << endl;
+	  }
+    }
+
+    if (noAdd == false){
+
+      if (gph->findVertex(temp1) == NULL )
+      { //vertex temp1 does not exist in graph
+        v1 = new Vertex(temp1);
+        gph->addVertex(v1);
+      }
+
+      else
+        //temp1 does exist, set v1 to found vertex
+        v1 = gph->findVertex(temp1);
+
+      if (gph->findVertex(temp2) == NULL )
+      {
+        //vertex temp2 does not exist in graph
+        v2 = new Vertex(temp2);
+        gph->addVertex(v2);
+      }
     
-    if ( gph->findVertex(temp1) == NULL )
-    { //vertex temp1 does not exist in graph
-      v1 = new Vertex(temp1);
-      gph->addVertex(v1);
-    }
-    else
-      //temp1 does exist, set v1 to found vertex
-      v1 = gph->findVertex(temp1);
+      else
+        //temp2 does exist, set v2 to found vertex
+        v2 = gph->findVertex(temp2);
 
-    if ( gph->findVertex(temp2) == NULL )
-    {
-      //vertex temp2 does not exist in graph
-      v2 = new Vertex(temp2);
-      gph->addVertex(v2);
+      // connect v1 and v2
+      v1->addAdjVertex( v2, cost, time);
     }
-    else
-      //temp2 does exist, set v2 to found vertex
-      v2 = gph->findVertex(temp2);
-
-    // connect v1 and v2
-    v1->addAdjVertex( v2, cost, time);
   }
 
   /*if ( ! in.eof() )
@@ -77,7 +97,7 @@ int main( int argc, char* argv[] )
   */
 
   in.close();
-  cout << "DONE." << endl;
+  //cout << "DONE." << endl;
 
   // TODO: DEBUGGING
   //gph->displayGraph();
@@ -85,7 +105,7 @@ int main( int argc, char* argv[] )
 
   int gCost = gph->totalCost();
   // total cost of graph
-  cout << "g total cost " << gCost << endl;
+  cout << gCost << endl;
 
   //construct MST from graph
   Graph * mst = gph->MST();
@@ -96,22 +116,22 @@ int main( int argc, char* argv[] )
   
   int mCost = mst->totalCost();
   // total cost of mst
-  cout << "mst total cost " << mCost << endl;
+  cout << mCost << endl;
 
   //difference in cost between graph and mst
-  cout << "total cost diff " << gCost - mCost << endl;
+  cout << gCost - mCost << endl;
 
   // run dijkstra algorithm on graph and mst
   int dijG = gph->dijkstra();
   int dijM = mst->dijkstra();
 
   // shortest dijkstra time of graph
-  cout << "g dij " << dijG << endl;
+  cout << dijG << endl;
   // shortest dijkstra time of mst
-  cout << "m dij " << dijM << endl;
+  cout << dijM << endl;
 
   // difference in timecost of dijkstra between graph and mst
-  cout << "dij diff " << dijM - dijG << endl;
+  cout << dijM - dijG << endl;
 
   //complete run, end program
   return 0;
