@@ -164,26 +164,20 @@ Graph* Graph::MST()
   return kenny;
 }
 
-//Adding in Edge Support
+//Selects Edge with lowest time(distance) for the input vertex
 std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr, vector<Edge> eList){
-  cout << " " << endl;
-  cout << "EnterDK " << endl;
-  //cout << "Name: "<< curr->getName() << endl;
+  //cout << " " << endl;
+  //cout << "EnterDK " << endl;
   Edge * pEdge = NULL;
   int tDist = std::numeric_limits<int>::max();
   for (int i=0; (unsigned)i<eList.size(); i++){
-      //cout << "here" << endl;
     if (eList[i].getEnd()->isVisited() == false && tDist > eList[i].getTime()){
-      /*cout <<"Beg: " << eList[i].getStart()->getName() << endl;
-      cout <<"Dest: "<< eList[i].getEnd()->getName() << endl;
-      cout <<"EdgeTime: "<< eList[i].getTime() << endl;*/
-      //cout << i << "th time through loop" << endl;
       tDist = eList[i].getTime();
       pEdge = &(eList[i]);
     }
   }
-  cout << "ExitDK " << endl;
-  cout << " " << endl;
+  //cout << "ExitDK " << endl;
+  //cout << " " << endl;
   if (pEdge != NULL){
     return std::make_pair(pEdge, pEdge->getStart());
   }
@@ -196,35 +190,40 @@ std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr, vector<Edge> eList){
 int Graph::dijkstra()
 {
   int sd = 0;
+  //For loop cycles through all vertices, running dijkstra's on all of them.
   for ( int x = 0; x<(int)vList.size(); x++ ){
     int totalTime = 0;
     this->reset();
+    //create and initialize current vertex, associated iterators
     vector<Vertex*> visited;
     Vertex * curr = vList[x];
     curr->dist = 0;
     curr->setPre( NULL ); //keep an eye on this
     curr->setVisited(true);
     visited.push_back(curr);
-    cout << "InitialName: " << curr->getName() << endl;
+    //cout << "InitialName: " << curr->getName() << endl;
     vector<Vertex*>::iterator visIter = visited.begin();
     vector<Vertex*>::iterator visEn = visited.end();
-  
+    
+    //set all other vertex distances to "infinity"
     for( int i=0; i<(int)vList.size(); i++ ){
       if (i == x)
         continue;
       else
-        //set all other vertice distances to "infinity"    
 	vList[i]->dist = std::numeric_limits<int>::max(); 
     }
     
     std::pair<Edge*, Vertex*> pr1;
     std::pair<Edge*, Vertex*> pr2;
+    Edge temp = Edge(NULL, NULL, 0, 0);
+    Vertex tempV = Vertex("cake");
+
+    //cycle through all visited vertices looking for lowest new unvisited
+    //edge
     while (visited.size() != vList.size()){
       int count = 0;
       for (; visIter != visEn; ++visIter){
-        //cout << " " << endl;
-        //cout << "Begin Loop" << endl;
-	//cout << "Begin Name: " << (*visIter)->getName() << endl;
+      	//cout << "Count1: " << count << endl;
 	vector<Edge> eList = (*visIter)->getEdges();
         pr1 = dkHelper(*visIter, eList);
 	//cout << "here2" << endl;
@@ -233,54 +232,57 @@ int Graph::dijkstra()
 	  if (count != 0){
   	    count++;
 	  }
-  	  //cout << "All neighbor vertices have been visited " << endl;
+	  //cout << "It's Happening!" << endl;
           continue;
         }
         if (count == 0){
-	  //cout << "Count is 0" << endl;
-	  //cout << "pr1f start: " << pr1.second->getName() << endl;
-          //cout << "pr1f end: " << pr1.first->getEnd()->getName() << endl;
-	  //cout << "pr1f strt: " << pr1.first->getStart()->getName() << endl;
-	  //cout << "pr1s: " << pr1.second << endl;
-	  //cout << "pr2.first: " << pr2.first->getStart()->getName() << endl;
-	  //cout << "pr2s: " << pr2.second << endl;
-          pr2 = pr1;
-	  //cout << "done assigning" << endl;
+	  pr2 = pr1;
+	  temp = *(pr2.first);
+	  tempV = *(pr2.second);
+	  pr2.first = &temp;
+	  pr2.second = &tempV;
+	  count++;
+	  //cout << "Initial Assigning: " << endl;
         }
-	else
-	  //cout << "Count is not 0" << endl;
-	//cout << "LoopBegName: " << pr1.first->getStart()->getName() << endl;
-        //cout << "LoopInDist: " << pr1.second << endl;
-        //cout << "LoopLowDist: " << pr2.second << endl;
-        if (pr2.first->getTime() > pr1.first->getTime()){
+	//cout << "Count2: " << count << endl;
+	//cout << "OldTime: " << temp.getTime() + tempV.dist << endl;
+	//cout << "PossibleNewTime: " << pr1.first->getTime()+ pr1.second->dist<< endl;
+        if ( (temp.getTime() + tempV.dist) > (pr1.first->getTime() + pr1.second->dist)){
           pr2 = pr1;
-  	  cout << "LoopNewLowDist: " << pr2.second << endl;
+	  temp = *(pr2.first);
+	  tempV = *(pr2.second);
+	  pr2.first = &temp;
+	  pr2.second = &tempV;
+	  //cout << "LoopNewBeg: " << pr2.second->getName() << endl;
+	  //cout << "LoopNewDest: " << pr2.first->getEnd()->getName() << endl;
+  	  //cout << "LoopNewLowTime: " << pr2.first->getTime()+ pr1.second->dist << endl;
         }
-        count++;
-        //cout << "Endloop " << endl;
-        //cout << " " <<endl;
       }
-      count = 0;
       //set the vertex visited, set its distance, and push it into vector.
-      cout << " " << endl;
-      cout << "FinalDest: " << pr2.first->getEnd()->getName() << endl;
-      cout << "FinalBeg: " << pr2.second->getName() << endl;
-      //cout << "FinalBeg: " << (*visIter)->getName() << endl;
+      //cout << " " << endl;
+      //cout << "FinalBeg: " << pr2.second->getName() << endl;
+      //cout << "FinalDest: " << pr2.first->getEnd()->getName() << endl;
       pr2.first->getEnd()->setVisited(true);
       pr2.first->getEnd()->setPre(pr2.second);
-      //pr2.first->getEnd()->setPre(*visIter);
-      cout << "PreName: " << pr2.first->getEnd()->getPre()->getName() << endl;
+      //cout << "PreName: " << pr2.first->getEnd()->getPre()->getName() << endl;
+      //cout << "PreDist: " << pr2.first->getEnd()->getPre()->dist << endl;
+      //cout << "EdgeTime: " << pr2.first->getTime() << endl;
       pr2.first->getEnd()->dist = pr2.first->getTime() + pr2.first->getEnd()->getPre()->dist;
-      cout << "PreDist: " << pr2.first->getEnd()->getPre()->dist << endl;
-      totalTime = pr2.first->getEnd()->dist + totalTime;
-      cout << "totalTime: " << totalTime << endl;
-      cout << " " << endl;
+      //cout << "DestName: " << pr2.first->getEnd()->getName() << endl;
+      //cout << "DestDist: " << pr2.first->getEnd()->dist << endl;
+      //cout << " " << endl;
       visited.push_back(pr2.first->getEnd());
       //reset iterators for newly bigger vector.
       visIter = visited.begin();
       visEn = visited.end();
     }
+    for(int i = 0; i < (int)visited.size(); i++){
+      totalTime = visited[i]->dist + totalTime;
+    }
     //cout << "totalTime: " << totalTime << endl;
+    //cout << endl;
+    //cout << endl;
+    //cout << endl;
     sd = sd + totalTime;
   }
   return sd;
