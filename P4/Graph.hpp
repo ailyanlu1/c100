@@ -36,12 +36,13 @@ class Graph
     ~Graph()
     {
       for (int i = 0; i< (int)vList.size(); i++){
-        vector<Edge> E = vList[i]->getEdges();
+        /*vector<Edge> E = vList[i]->getEdges();
 	for(int j = 0; j< (int)E.size(); j++){
 	  delete &(E[j]);
 	}
-	E.clear();
+	E.clear();*/
 	delete vList[i];
+	vList[i]=NULL;
       }
       vList.clear();
     }
@@ -50,7 +51,7 @@ class Graph
     Graph* MST();
 
     /* Dijkstra's shortest path method */
-    std::pair<Edge*, Vertex*> dkHelper(Vertex* curr, vector<Edge> eList);
+    std::pair<Edge*, Vertex*> dkHelper(Vertex* curr);
     int dijkstra();
     
     /* print list of vertices and connected edges */

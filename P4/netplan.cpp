@@ -132,5 +132,9 @@ int main( int argc, char* argv[] )
   cout << dijM - dijG << endl;
 
   //complete run, end program
+  delete mst;
+  mst = NULL;
+  delete gph;
+  gph = NULL;
   return 0;
 }

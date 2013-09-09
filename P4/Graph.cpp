@@ -18,7 +18,7 @@
 
 void Graph::displayGraph()
 {
-  for( int i=0; (unsigned)i<vList.size(); i++ )
+  for( int i=0; i<(int)vList.size(); i++ )
   {
     cout<<"Vertex " <<vList[i]->getName()<< " has the following edges: "<<endl;
     vList[i]->printList();
@@ -34,11 +34,11 @@ int Graph::totalCost()
   int total = 0;
 
   // for each vertex in graph
-  for( int i=0; (unsigned)i<vList.size(); i++ )
+  for( int i=0; i<(int)vList.size(); i++ )
   {
     vector<Edge> e = vList[i]->getEdges();
     // for each edge from current vector
-    for( int j=0; (unsigned)j<e.size(); j++ )
+    for( int j=0; j<(int)e.size(); j++ )
     {
       //Edge temp = e[i];
       // if end vertex not yet visited
@@ -84,7 +84,7 @@ int Graph::totalTime()
  */
 void Graph::reset()
 {
-  for( int i=0; (unsigned)i<vList.size(); i++ )
+  for( int i=0; i<(int)vList.size(); i++ )
     vList[i]->setVisited( false );
 }
 
@@ -101,7 +101,7 @@ void Graph::addVertex( Vertex * ve )
  */
 Vertex* Graph::findVertex( string id )
 {
-  for( int i=0; (unsigned)i<vList.size(); i++ )
+  for( int i=0; i<(int)vList.size(); i++ )
     if( vList[i]->getName() == id )
       return vList[i];
 
@@ -120,7 +120,7 @@ Graph* Graph::MST()
 
   priority_queue< Edge, vector<Edge>, EdgeCostCompare > pQueue;
 
-  for( int i=0; (unsigned)i<eList.size(); i++ )
+  for( int i=0; i<(int)eList.size(); i++ )
     pQueue.push( eList[i] );
 
   Graph * kenny = new Graph();
@@ -157,18 +157,20 @@ Graph* Graph::MST()
 
       v1->addAdjVertex( v2, e.getCost(), e.getTime() );
 
-      for( int j=0; (unsigned)j<destList.size(); j++ )
+      for( int j=0; j<(int)destList.size(); j++ )
         pQueue.push( destList[j] );
     }
+
   }
   return kenny;
 }
 
 //Selects Edge with lowest time(distance) for the input vertex
-std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr, vector<Edge> eList){
+std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr){
   Edge * pEdge = NULL;
+  vector<Edge> eList = curr->getEdges();
   int tDist = std::numeric_limits<int>::max();
-  for (int i=0; (unsigned)i<eList.size(); i++){
+  for (int i=0; i<(int)eList.size(); i++){
     if (eList[i].getEnd()->isVisited() == false && tDist > eList[i].getTime()){
       tDist = eList[i].getTime();
       pEdge = &(eList[i]);
@@ -182,6 +184,7 @@ std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr, vector<Edge> eList){
     Vertex * nullVert = NULL;
     return std::pair<Edge*, Vertex*>(pEdge, nullVert);
   }
+  eList.clear();
 }
 
 int Graph::dijkstra()
@@ -194,7 +197,7 @@ int Graph::dijkstra()
     //create and initialize current vertex, associated iterators
     vector<Vertex*> visited;
     Vertex * curr = vList[x];
-    curr->dist = 0;
+    curr->setDist(0);
     curr->setPre( NULL ); //keep an eye on this
     curr->setVisited(true);
     visited.push_back(curr);
@@ -206,7 +209,7 @@ int Graph::dijkstra()
       if (i == x)
         continue;
       else
-	vList[i]->dist = std::numeric_limits<int>::max(); 
+	vList[i]->setDist(std::numeric_limits<int>::max()); 
     }
     
     //cycle through all visited vertices looking for lowest new unvisited
@@ -216,34 +219,33 @@ int Graph::dijkstra()
       std::pair<Edge*, Vertex*> pr2;
       int count = 0;
       for (; visIter != visEn; ++visIter){
-        pr1 = dkHelper(*visIter, (*visIter)->getEdges());
+        pr1 = dkHelper(*visIter);
         if (pr1.first == NULL){
 	  //all neighbor Vertices have been visited for curr
 	  if (count != 0){
   	    count++;
 	  }
-	  //cout << "NULL " << endl;
           continue;
         }
         if (count == 0){
 	  pr2 = pr1;
 	  count++;
         }
-	if ( (pr2.first->getTime() + pr2.second->dist) > (pr1.first->getTime() + pr1.second->dist)){
+	if ( (pr2.first->getTime() + pr2.second->getDist()) > (pr1.first->getTime() + pr1.second->getDist())){
 	  pr2 = pr1;
         }
       }
       //set the vertex visited, set its distance, and push it into vector.
       pr2.first->getEnd()->setVisited(true);
       pr2.first->getEnd()->setPre(pr2.second);
-      pr2.first->getEnd()->dist = pr2.first->getTime() + pr2.first->getEnd()->getPre()->dist;
+      pr2.first->getEnd()->setDist(pr2.first->getTime() + pr2.first->getEnd()->getPre()->getDist());
       visited.push_back(pr2.first->getEnd());
       //reset iterators for newly bigger vector.
       visIter = visited.begin();
       visEn = visited.end();
     }
     for(int i = 0; i < (int)visited.size(); i++){
-      totalTime = visited[i]->dist + totalTime;
+      totalTime = visited[i]->getDist() + totalTime;
     }
     sd = sd + totalTime;
   }

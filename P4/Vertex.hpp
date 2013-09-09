@@ -25,10 +25,9 @@ class Vertex
     Vertex * pre;		/* pointer to previous vertex */
     bool visited;		/* visited flag */
     vector<Edge> conList;	/* list of connected edges for this vertex */
-    
+    int dist; 
 
   public:
-    int dist;
 
     /* constructor */
     Vertex( string id )
@@ -64,12 +63,22 @@ class Vertex
       return pre;
     }
 
+    int getDist()
+    {
+      return dist;
+    }
+
+    void setDist(int nDist)
+    {
+      dist = nDist;
+    }
+
     void setPre( Vertex * newPre )
     {
       pre = newPre;
     }
     
-    vector<Edge> getEdges()
+    vector<Edge>& getEdges()
     {
       return conList;
     }
@@ -104,16 +113,16 @@ class Vertex
      */
     void addAdjVertex( Vertex * adj, int cost, int time )
     {
-      Edge * newEdge = new Edge( this, adj, cost, time );
+      Edge newEdge( this, adj, cost, time );
 
       if (! existEdge( adj ) )
       {
-        conList.push_back( *newEdge );
-	Edge * otherEdge = new Edge( adj, this, cost, time );
-	adj->conList.push_back( *otherEdge );
+        conList.push_back( newEdge );
+	Edge otherEdge( adj, this, cost, time );
+	adj->conList.push_back( otherEdge );
       }
       else if ( this->name == adj->name ){
-        conList.push_back( *newEdge );
+        conList.push_back( newEdge );
       }
     }
 };
