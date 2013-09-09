@@ -35,6 +35,14 @@ class Graph
     /* Destructor */
     ~Graph()
     {
+      for (int i = 0; i< (int)vList.size(); i++){
+        vector<Edge> E = vList[i]->getEdges();
+	for(int j = 0; j< (int)E.size(); j++){
+	  delete &(E[j]);
+	}
+	E.clear();
+	delete vList[i];
+      }
       vList.clear();
     }
 

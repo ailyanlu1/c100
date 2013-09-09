@@ -25,6 +25,7 @@ class Vertex
     Vertex * pre;		/* pointer to previous vertex */
     bool visited;		/* visited flag */
     vector<Edge> conList;	/* list of connected edges for this vertex */
+    
 
   public:
     int dist;

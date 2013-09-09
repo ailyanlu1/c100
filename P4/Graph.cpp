@@ -166,8 +166,6 @@ Graph* Graph::MST()
 
 //Selects Edge with lowest time(distance) for the input vertex
 std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr, vector<Edge> eList){
-  //cout << " " << endl;
-  //cout << "EnterDK " << endl;
   Edge * pEdge = NULL;
   int tDist = std::numeric_limits<int>::max();
   for (int i=0; (unsigned)i<eList.size(); i++){
@@ -176,14 +174,13 @@ std::pair<Edge*, Vertex*> Graph::dkHelper(Vertex* curr, vector<Edge> eList){
       pEdge = &(eList[i]);
     }
   }
-  //cout << "ExitDK " << endl;
-  //cout << " " << endl;
   if (pEdge != NULL){
-    return std::make_pair(pEdge, pEdge->getStart());
+    return std::pair<Edge*, Vertex*>(pEdge, pEdge->getStart());
   }
   else{
+    //cout << "pEdge NULL, Exiting DK" << endl;
     Vertex * nullVert = NULL;
-    return std::make_pair(pEdge, nullVert);
+    return std::pair<Edge*, Vertex*>(pEdge, nullVert);
   }
 }
 
@@ -201,7 +198,6 @@ int Graph::dijkstra()
     curr->setPre( NULL ); //keep an eye on this
     curr->setVisited(true);
     visited.push_back(curr);
-    //cout << "InitialName: " << curr->getName() << endl;
     vector<Vertex*>::iterator visIter = visited.begin();
     vector<Vertex*>::iterator visEn = visited.end();
     
@@ -213,45 +209,31 @@ int Graph::dijkstra()
 	vList[i]->dist = std::numeric_limits<int>::max(); 
     }
     
-    std::pair<Edge*, Vertex*> pr1;
-    std::pair<Edge*, Vertex*> pr2;
-    Edge temp = Edge(NULL, NULL, 0, 0);
-    Vertex tempV = Vertex("cake");
-
     //cycle through all visited vertices looking for lowest new unvisited
     //edge
     while (visited.size() != vList.size()){
+      std::pair<Edge*, Vertex*> pr1;
+      std::pair<Edge*, Vertex*> pr2;
       int count = 0;
       for (; visIter != visEn; ++visIter){
-      	//cout << "Count1: " << count << endl;
-	vector<Edge> eList = (*visIter)->getEdges();
-        pr1 = dkHelper(*visIter, eList);
-	//cout << "here2" << endl;
+        pr1 = dkHelper(*visIter, (*visIter)->getEdges());
         if (pr1.first == NULL){
-          //all neighbor Vertices have been visited for curr
+	  //all neighbor Vertices have been visited for curr
 	  if (count != 0){
   	    count++;
 	  }
-	  //cout << "It's Happening!" << endl;
+	  //cout << "NULL " << endl;
           continue;
         }
         if (count == 0){
 	  pr2 = pr1;
-	  temp = *(pr2.first);
-	  tempV = *(pr2.second);
-	  pr2.first = &temp;
-	  pr2.second = &tempV;
 	  count++;
-	  //cout << "Initial Assigning: " << endl;
         }
-	        if ( (temp.getTime() + tempV.dist) > (pr1.first->getTime() + pr1.second->dist)){
-          pr2 = pr1;
-	  temp = *(pr2.first);
-	  tempV = *(pr2.second);
-	  pr2.first = &temp;
-	  pr2.second = &tempV;
+	if ( (pr2.first->getTime() + pr2.second->dist) > (pr1.first->getTime() + pr1.second->dist)){
+	  pr2 = pr1;
         }
       }
+      //set the vertex visited, set its distance, and push it into vector.
       pr2.first->getEnd()->setVisited(true);
       pr2.first->getEnd()->setPre(pr2.second);
       pr2.first->getEnd()->dist = pr2.first->getTime() + pr2.first->getEnd()->getPre()->dist;
@@ -263,10 +245,6 @@ int Graph::dijkstra()
     for(int i = 0; i < (int)visited.size(); i++){
       totalTime = visited[i]->dist + totalTime;
     }
-    //cout << "totalTime: " << totalTime << endl;
-    //cout << endl;
-    //cout << endl;
-    //cout << endl;
     sd = sd + totalTime;
   }
   return sd;
