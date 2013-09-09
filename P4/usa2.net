@@ -1,0 +1,7 @@
+ibm.com       yahoo.com  20   33
+yahoo.com     ucsd.edu   19   40
+ucsd.edu      ibm.com    10   17
+yahoo.com     fsf.org	 200  300
+yahoo.com     fsf.org    5    10
+fsf.org	      fsf.org	 300  150
+jay	      ibm.com	 400  500
