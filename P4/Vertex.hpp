@@ -111,6 +111,9 @@ class Vertex
 	Edge * otherEdge = new Edge( adj, this, cost, time );
 	adj->conList.push_back( *otherEdge );
       }
+      else if ( this->name == adj->name ){
+        conList.push_back( *newEdge );
+      }
     }
 };
 #endif // VERTEX_HPP

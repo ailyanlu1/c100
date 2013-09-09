@@ -68,7 +68,6 @@ int main( int argc, char* argv[] )
         v1 = new Vertex(temp1);
         gph->addVertex(v1);
       }
-
       else
         //temp1 does exist, set v1 to found vertex
         v1 = gph->findVertex(temp1);
@@ -78,8 +77,7 @@ int main( int argc, char* argv[] )
         //vertex temp2 does not exist in graph
         v2 = new Vertex(temp2);
         gph->addVertex(v2);
-      }
-    
+      }  
       else
         //temp2 does exist, set v2 to found vertex
         v2 = gph->findVertex(temp2);

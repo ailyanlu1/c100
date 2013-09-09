@@ -61,11 +61,11 @@ int Graph::totalTime()
   int total = 0;
 
   // for each vertex in graph
-  for( int i=0; (unsigned)i<vList.size(); i++ )
+  for( int i=0; i<(int)vList.size(); i++ )
   {
     vector< Edge> e = vList[i]->getEdges();
     // for each edge from current vector
-    for( int j=0; (unsigned)j<e.size(); j++ )
+    for( int j=0; j<(int)e.size(); j++ )
     {
       //Edge temp = e[i];
       // if end vertex not yet visited
@@ -244,33 +244,17 @@ int Graph::dijkstra()
 	  count++;
 	  //cout << "Initial Assigning: " << endl;
         }
-	//cout << "Count2: " << count << endl;
-	//cout << "OldTime: " << temp.getTime() + tempV.dist << endl;
-	//cout << "PossibleNewTime: " << pr1.first->getTime()+ pr1.second->dist<< endl;
-        if ( (temp.getTime() + tempV.dist) > (pr1.first->getTime() + pr1.second->dist)){
+	        if ( (temp.getTime() + tempV.dist) > (pr1.first->getTime() + pr1.second->dist)){
           pr2 = pr1;
 	  temp = *(pr2.first);
 	  tempV = *(pr2.second);
 	  pr2.first = &temp;
 	  pr2.second = &tempV;
-	  //cout << "LoopNewBeg: " << pr2.second->getName() << endl;
-	  //cout << "LoopNewDest: " << pr2.first->getEnd()->getName() << endl;
-  	  //cout << "LoopNewLowTime: " << pr2.first->getTime()+ pr1.second->dist << endl;
         }
       }
-      //set the vertex visited, set its distance, and push it into vector.
-      //cout << " " << endl;
-      //cout << "FinalBeg: " << pr2.second->getName() << endl;
-      //cout << "FinalDest: " << pr2.first->getEnd()->getName() << endl;
       pr2.first->getEnd()->setVisited(true);
       pr2.first->getEnd()->setPre(pr2.second);
-      //cout << "PreName: " << pr2.first->getEnd()->getPre()->getName() << endl;
-      //cout << "PreDist: " << pr2.first->getEnd()->getPre()->dist << endl;
-      //cout << "EdgeTime: " << pr2.first->getTime() << endl;
       pr2.first->getEnd()->dist = pr2.first->getTime() + pr2.first->getEnd()->getPre()->dist;
-      //cout << "DestName: " << pr2.first->getEnd()->getName() << endl;
-      //cout << "DestDist: " << pr2.first->getEnd()->dist << endl;
-      //cout << " " << endl;
       visited.push_back(pr2.first->getEnd());
       //reset iterators for newly bigger vector.
       visIter = visited.begin();
